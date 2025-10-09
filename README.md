@@ -1,67 +1,156 @@
-# MeetSphere 🚀
+# 🏫 IntraNewton: College-Specific Social Media Platform
 
-A **real-time video conferencing web application** inspired by Zoom and Google Meet. Built with modern web technologies, providing **seamless video, audio, and chat experience**.
+## 📘 Project Overview
+**IntraNewton** is a social media platform exclusively designed for college students within our institution.  
+It aims to foster a connected and engaging online community where students can interact, share information, and collaborate in a secure and controlled environment.
+
+This document outlines the project's **scope**, **technical architecture**, and **key features**.
 
 ---
 
-## 🌐 Tech Stack
+## 🎯 Project Goals
 
-### Frontend
-- **Next.js / React.js**
+1. **Create a dedicated platform for college students:**  
+   Provide a safe and exclusive online space for our college community.
+
+2. **Facilitate student interaction and engagement:**  
+   Enable students to connect, share updates, and participate in discussions.
+
+3. **Support academic and extracurricular activities:**  
+   Offer features that help students collaborate on projects and organize events.
+
+4. **Ensure data security and privacy:**  
+   Implement robust authentication and authorization mechanisms to protect user data.
+
+---
+
+## 🧩 Technical Stack
+
+### 🖥 Backend
+- **Node.js**
+- **Express.js**
+- **Prisma ORM**
+- **JWT (JSON Web Token)**
+
+### 🗄 Database
+- **MySQL**
+
+### 💻 Frontend
+- **React.js**
+- **React Router**
+- **Axios**
+- **Context API**
+
+### 🎨 UI & Styling Libraries
+- **shadcn/ui**
 - **Tailwind CSS**
-- **Shadcn/ui** for UI components
 
-### Backend
-- **Node.js + Express**
-- **Prisma ORM** (with MySQL or PostgreSQL)
-- **JWT** for authentication
-- **Socket.io** for real-time video and chat
+### 🔐 Authentication & Security
+- **JWT Authentication**
+- **Bcrypt Password Hashing**
+- **HTTPS**
+- **Email Verification**
 
-### Database
-- **MySQL / PostgreSQL / MongoDB**
+### ☁️ Deployment & DevOps
+- **Vercel**
 
-### DevOps / Hosting
-- Frontend: **Vercel / Netlify**  
-- Backend: **Render / Railway**  
-- Database: Managed **MySQL / PostgreSQL**
+### 🧾 Version Control & Documentation
+- **Git**
+- **GitHub**
 
 ---
 
-## ✨ Features
+## 🚀 Key Features (Stepwise & Concise)
 
-<details>
-<summary><strong>Core Features</strong></summary>
+### 1️⃣ User Management
+- Signup/login with **college email** only  
+- Manage profile, password, and privacy settings
 
-- User authentication with JWT  
-- Create, join, and leave meetings  
-- Host can manage participants  
-- Real-time video and audio streaming (via WebRTC)  
-- Text chat during meetings  
-- Meeting scheduling with start/end time  
-- Participant roles: host, co-host, participant  
+### 2️⃣ Posts & Feed
+- Create **text, image, or video posts**
+- View a personalized **feed**
+- Edit or delete posts
+- Control post visibility (public/private)
 
-</details>
+### 3️⃣ Followers / Connections
+- Follow and unfollow students  
+- View **followers/following count**
+- Get **suggested connections**
 
-<details>
-<summary><strong>Unique / Advanced Features</strong></summary>
+### 4️⃣ Comments & Likes
+- Like and comment on posts  
+- Edit/delete comments  
+- Optional **nested replies**
 
-- Screen sharing  
-- Live transcription / captions  
-- Meeting recording  
-- Breakout rooms for group discussions  
-- Dark/Light mode UI  
-- Push notifications for meeting invites  
-- Realtime participant analytics (joined, left, speaking time)  
+### 5️⃣ Chat / Messaging
+- One-on-one chat (real-time)  
+- Optional **group chat**  
+- Message history support
 
-</details>
+### 6️⃣ Notifications
+- Get notifications for likes, comments, follows, and messages
+
+### 7️⃣ Media Storage
+- Upload and store **profile pictures and post media**
+- Optimized for fast web performance
+
+### 8️⃣ Search & Discovery
+- Search students by **name, department, year, or interests**
+- Explore trending content
+
+### 9️⃣ Groups & Events *(Optional)*
+- Create **interest or department-based groups**
+- Post in groups, **RSVP** to events
+
+### 🔟 Admin / Moderation *(Optional)*
+- Manage users and content  
+- **Report/block** inappropriate posts  
+- View **analytics**
+
+### ⚙️ Advanced / Future Features
+- **Stories**
+- **Polls**
+- **Gamification**
+- **Dark Mode**
+- **AI Suggestions**
+- **Push Notifications**
 
 ---
 
-## 🛠️ Usage
-
-1. Register or login as a user  
-2. Create a new meeting and share the meeting link  
-3. Join existing meetings using the meeting ID  
-4. Chat, share screen, or record the session as per your role  
+## 📈 Future Scope
+The platform can evolve into a **college-wide networking ecosystem**, integrating:
+- Alumni connections  
+- Career and internship portals  
+- College announcements and digital ID integrations
 
 ---
+
+## 🧑‍💻 Contributors
+- **Project Lead:** Hariksh Mahendra Suryawanashi  
+- **Team Members:** (Add names here)
+
+---
+
+## 📄 License
+This project is licensed under the **MIT License** — feel free to modify and build upon it responsibly.
+
+---
+
+## 🪄 Getting Started (Optional Section)
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/intranewton.git
+cd intranewton
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables
+# (Create .env file with database URL, JWT_SECRET, etc.)
+
+# 4. Run Prisma migrations
+npx prisma migrate dev --name init
+
+# 5. Start the development server
+npm run dev
