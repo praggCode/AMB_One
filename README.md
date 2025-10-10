@@ -36,10 +36,8 @@ This document outlines the project's **scope**, **technical architecture**, and 
 - **MySQL**
 
 ### 💻 Frontend
-- **React.js**
-- **React Router**
+- **Next.js**
 - **Axios**
-- **Context API**
 
 ### 🎨 UI & Styling Libraries
 - **shadcn/ui**
@@ -48,8 +46,7 @@ This document outlines the project's **scope**, **technical architecture**, and 
 ### 🔐 Authentication & Security
 - **JWT Authentication**
 - **Bcrypt Password Hashing**
-- **HTTPS**
-- **Email Verification**
+- **OAuth2.0**
 
 ### ☁️ Deployment & DevOps
 - **Vercel**
@@ -127,7 +124,7 @@ The platform can evolve into a **college-wide networking ecosystem**, integratin
 
 ## 🧑‍💻 Contributors
 - **Project Lead:** Hariksh Mahendra Suryawanashi  
-- **Team Members:** (Add names here)
+- **Team Members:** Progyan Sen
 
 ---
 
