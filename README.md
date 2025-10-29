@@ -1,153 +1,58 @@
-# 🏫 IntraNewton: College-Specific Social Media Platform
+# 🚑 Ambulance Booking System
 
-## 📘 Project Overview
-**IntraNewton** is a social media platform exclusively designed for college students within our institution.  
-It aims to foster a connected and engaging online community where students can interact, share information, and collaborate in a secure and controlled environment.
-
-This document outlines the project's **scope**, **technical architecture**, and **key features**.
+An advanced web application for booking ambulances in emergencies — inspired by Uber but designed for healthcare needs.  
+The system includes two main roles: **Client (Patient)** and **Driver (Ambulance Driver)**, with a secure **OTP-based login for clients** and **email-password login for drivers**.
 
 ---
 
-## 🎯 Project Goals
+## 🧠 Project Overview
 
-1. **Create a dedicated platform for college students:**  
-   Provide a safe and exclusive online space for our college community.
-
-2. **Facilitate student interaction and engagement:**  
-   Enable students to connect, share updates, and participate in discussions.
-
-3. **Support academic and extracurricular activities:**  
-   Offer features that help students collaborate on projects and organize events.
-
-4. **Ensure data security and privacy:**  
-   Implement robust authentication and authorization mechanisms to protect user data.
+The Ambulance Booking System allows patients to quickly book nearby ambulances, view live tracking, and communicate with drivers in real-time.  
+Drivers can accept bookings, navigate to patient locations, and update trip statuses.  
+Admins can optionally monitor trips and manage users.
 
 ---
 
-## 🧩 Technical Stack
-
-### 🖥 Backend
-- **Node.js**
-- **Express.js**
-- **Prisma ORM**
-- **JWT (JSON Web Token)**
-
-### 🗄 Database
-- **MySQL**
-
-### 💻 Frontend
-- **Next.js**
-- **Axios**
-
-### 🎨 UI & Styling Libraries
-- **shadcn/ui**
-- **Tailwind CSS**
-
-### 🔐 Authentication & Security
-- **JWT Authentication**
-- **Bcrypt Password Hashing**
-- **OAuth2.0**
-
-### ☁️ Deployment & DevOps
-- **Vercel**
-
-### 🧾 Version Control & Documentation
-- **Git**
-- **GitHub**
+## 🧍 Client Features
+- OTP-based mobile authentication  
+- Live tracking using Google Maps API  
+- Emergency one-tap booking  
+- Booking history and trip updates  
+- Estimated fare and arrival time  
+- Direct call/chat with driver  
 
 ---
 
-## 🚀 Key Features (Stepwise & Concise)
-
-### 1️⃣ User Management
-- Signup/login with **college email** only  
-- Manage profile, password, and privacy settings
-
-### 2️⃣ Posts & Feed
-- Create **text, image, or video posts**
-- View a personalized **feed**
-- Edit or delete posts
-- Control post visibility (public/private)
-
-### 3️⃣ Followers / Connections
-- Follow and unfollow students  
-- View **followers/following count**
-- Get **suggested connections**
-
-### 4️⃣ Comments & Likes
-- Like and comment on posts  
-- Edit/delete comments  
-- Optional **nested replies**
-
-### 5️⃣ Chat / Messaging
-- One-on-one chat (real-time)  
-- Optional **group chat**  
-- Message history support
-
-### 6️⃣ Notifications
-- Get notifications for likes, comments, follows, and messages
-
-### 7️⃣ Media Storage
-- Upload and store **profile pictures and post media**
-- Optimized for fast web performance
-
-### 8️⃣ Search & Discovery
-- Search students by **name, department, year, or interests**
-- Explore trending content
-
-### 9️⃣ Groups & Events *(Optional)*
-- Create **interest or department-based groups**
-- Post in groups, **RSVP** to events
-
-### 🔟 Admin / Moderation *(Optional)*
-- Manage users and content  
-- **Report/block** inappropriate posts  
-- View **analytics**
-
-### ⚙️ Advanced / Future Features
-- **Stories**
-- **Polls**
-- **Gamification**
-- **Dark Mode**
-- **AI Suggestions**
-- **Push Notifications**
+## 🚘 Driver Features
+- Email/password authentication  
+- Accept/reject booking requests  
+- Real-time trip tracking and navigation  
+- Update trip status (Arrived, Started, Completed)  
+- View earnings and past trips  
 
 ---
 
-## 📈 Future Scope
-The platform can evolve into a **college-wide networking ecosystem**, integrating:
-- Alumni connections  
-- Career and internship portals  
-- College announcements and digital ID integrations
+## 🏥 Optional Admin Features
+- Manage drivers and clients  
+- Monitor ongoing bookings  
+- Analytics on usage and peak hours  
 
 ---
 
-## 🧑‍💻 Contributors
-- **Project Lead:** Hariksh Mahendra Suryawanashi  
-- **Team Members:** Progyan Sen
+## 🧩 Tech Stack
+| Layer | Technology |
+|--------|-------------|
+| Frontend | React.js |
+| Backend | Node.js (Express.js) |
+| Database | MongoDB |
+| Authentication | Firebase OTP (Client), JWT (Driver) |
+| Maps | Google Maps API |
+| Real-time Updates | Socket.io |
 
 ---
+🚀 Future Enhancements
 
-## 📄 License
-This project is licensed under the **MIT License** — feel free to modify and build upon it responsibly.
-
----
-
-## 🪄 Getting Started (Optional Section)
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/intranewton.git
-cd intranewton
-
-# 2. Install dependencies
-npm install
-
-# 3. Set up environment variables
-# (Create .env file with database URL, JWT_SECRET, etc.)
-
-# 4. Run Prisma migrations
-npx prisma migrate dev --name init
-
-# 5. Start the development server
-npm run dev
+- Payment Gateway Integration
+- Hospital Management Panel
+- Multi-language support
+- Push Notifications for emergency alerts
