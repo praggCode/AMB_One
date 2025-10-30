@@ -1,58 +1,72 @@
-# 🚑 Ambulance Booking System
+# 🚑 Ambulance Booking System – Frontend
 
-An advanced web application for booking ambulances in emergencies — inspired by Uber but designed for healthcare needs.  
-The system includes two main roles: **Client (Patient)** and **Driver (Ambulance Driver)**, with a secure **OTP-based login for clients** and **email-password login for drivers**.
-
----
-
-## 🧠 Project Overview
-
-The Ambulance Booking System allows patients to quickly book nearby ambulances, view live tracking, and communicate with drivers in real-time.  
-Drivers can accept bookings, navigate to patient locations, and update trip statuses.  
-Admins can optionally monitor trips and manage users.
+The **frontend** of the Ambulance Booking System is built with **React.js**, providing a user-friendly and responsive interface for both **clients** and **drivers**.  
+It connects seamlessly with the backend through REST APIs and Socket.io for real-time updates such as driver tracking and booking status.
 
 ---
 
-## 🧍 Client Features
-- OTP-based mobile authentication  
-- Live tracking using Google Maps API  
-- Emergency one-tap booking  
-- Booking history and trip updates  
-- Estimated fare and arrival time  
-- Direct call/chat with driver  
+## 💻 Overview
+
+- Two interfaces: **Client Panel** and **Driver Panel**  
+- Clients can **book ambulances**, **track drivers**, and **view booking history**  
+- Drivers can **log in**, **view assigned bookings**, and **update trip status**  
+- Real-time updates powered by **Socket.io** and **Google Maps API**  
 
 ---
 
-## 🚘 Driver Features
-- Email/password authentication  
-- Accept/reject booking requests  
-- Real-time trip tracking and navigation  
-- Update trip status (Arrived, Started, Completed)  
-- View earnings and past trips  
+## ⚙️ Key Features
+
+- 🔐 **OTP Authentication** for clients via Firebase  
+- 👨‍✈️ **Email & Password Login** for drivers  
+- 🚑 **Ambulance Booking** with pickup & destination inputs  
+- 📍 **Live Tracking** using Google Maps API  
+- 🕒 **Real-time Booking Status Updates** via Socket.io  
+- 📱 **Responsive Design** for both mobile and desktop users  
 
 ---
 
-## 🏥 Optional Admin Features
-- Manage drivers and clients  
-- Monitor ongoing bookings  
-- Analytics on usage and peak hours  
+## 🧰 Tech Stack
+
+| Technology | Purpose |
+|-------------|----------|
+| **React.js/Next.js** | Frontend library |
+| **Axios** | API communication |
+| **Socket.io Client** | Real-time updates |
+| **Firebase** | OTP authentication |
+| **Google Maps API** | Location and tracking |
+| **Tailwind CSS / CSS Modules** | Styling and layout |
+
 
 ---
 
-## 🧩 Tech Stack
-| Layer | Technology |
-|--------|-------------|
-| Frontend | React.js |
-| Backend | Node.js (Express.js) |
-| Database | MongoDB |
-| Authentication | Firebase OTP (Client), JWT (Driver) |
-| Maps | Google Maps API |
-| Real-time Updates | Socket.io |
+## 🧪 Testing
+
+- Test **client OTP login** using Firebase  
+- Test **driver login** using email and password  
+- Create and view **ambulance bookings**  
+- Check **real-time updates** for booking status and driver location  
+- Verify **responsive design** across devices  
 
 ---
-🚀 Future Enhancements
 
-- Payment Gateway Integration
-- Hospital Management Panel
-- Multi-language support
-- Push Notifications for emergency alerts
+## 🌐 Connection with Backend
+
+- Frontend communicates with backend APIs hosted at `/api/...`  
+- Uses **Socket.io** for real-time driver tracking and status updates  
+- Includes **JWT tokens** in headers for authenticated API requests  
+
+---
+
+## 🧱 Future Enhancements
+
+- 📍 Enhanced Google Maps tracking  
+- 💳 Online payment integration (Razorpay / Stripe)  
+- 🧑‍⚕️ Hospital dashboard interface  
+- 🌃 Dark mode theme  
+- 🔊 Voice alerts for drivers on new bookings  
+
+---
+
+
+
+
