@@ -1,0 +1,35 @@
+### 🔐 Authentication System
+- **Client Authentication (OTP-based)** using Firebase or Twilio
+  - Clients log in using their mobile number
+  - OTP is sent via Firebase Authentication
+  - Once verified, a JWT is issued for session management  
+- **Driver Authentication (Email + Password)**
+  - Drivers register and log in using secure credentials
+  - Passwords are hashed using **bcrypt**
+  - JWTs are used for authentication and route protection  
+
+---
+
+### 🚗 Booking Management
+- Clients can **book** an ambulance by providing pickup and destination details
+- System finds **nearest available driver**
+- Real-time **trip updates** (Requested → Accepted → In Progress → Completed → Cancelled)
+- Booking history is stored for both clients and drivers
+
+---
+
+### 💬 Real-time Communication
+- Implemented using **Socket.io**
+- Real-time updates for:
+  - Trip status changes
+  - Driver location updates
+  - Notifications for acceptance, arrival, or cancellations
+
+---
+
+### 🧾 Admin Capabilities (Optional Extension)
+- View all bookings and their statuses
+- Manage driver accounts
+- Monitor system analytics
+
+---

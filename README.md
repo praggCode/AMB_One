@@ -1,6 +1,7 @@
-# 🚑 Ambulance Booking System – Frontend
+# 🚑 Ambulance Booking System 
 
-The **frontend** of the Ambulance Booking System is built with **React.js**, providing a user-friendly and responsive interface for both **clients** and **drivers**.  
+The **frontend** of the Ambulance Booking System is built with **React.js**, providing a user-friendly and responsive interface for both **clients** and **drivers**.
+Its primary purpose is to simplify ambulance booking, track vehicles in real time, and manage trip statuses efficiently during emergencies.
 It connects seamlessly with the backend through REST APIs and Socket.io for real-time updates such as driver tracking and booking status.
 
 ---
@@ -36,6 +37,34 @@ It connects seamlessly with the backend through REST APIs and Socket.io for real
 | **Google Maps API** | Location and tracking |
 | **Tailwind CSS / CSS Modules** | Styling and layout |
 
+---
+
+ | -------------------------------------------------------------------------------------- |
+ |                            |        |                                                  |
+ | Endpoint                   | Method | Description                                      |
+ | -------------------------- | ------ | ------------------------------------------------ |
+ | `/api/auth/send-otp`       | POST   | Send OTP to client via Firebase                  |
+ | `/api/auth/verify-otp`     | POST   | Verify OTP and generate JWT                      |
+ | `/api/driver/register`     | POST   | Register driver with email & password            |
+ | `/api/driver/login`        | POST   | Driver login with JWT token return               |
+
+ | Endpoint                   | Method | Description                                      |
+ | -------------------------- | ------ | ------------------------------------------------ |
+ | `/api/bookings/create`     | POST   | Create new booking request                       |
+ | `/api/bookings/:id`        | GET    | Fetch booking details                            |
+ | `/api/bookings/update/:id` | PUT    | Update booking status (accept, complete, cancel) |
+ | `/api/bookings`            | GET    | Get all bookings for a client/driver             |
+
+ | Event                      | Method | Description                                      |
+ | -------------------------- | ------ | ------------------------------------------------ |
+ | `booking-request`          |        | Sent by client to requestambulance               |
+ | `booking-accept`           |        | Sent by driver to accept booking                 |
+ | `location-update`          |        | Continuously updates driver’s live location      |
+ | `trip-status`              |        |Emits trip progress and completion                |
+ |                                                                                        |
+ | -------------------------------------------------------------------------------------- |
+
+
 
 ---
 
@@ -43,7 +72,7 @@ It connects seamlessly with the backend through REST APIs and Socket.io for real
 
 Follow these steps to set up and run the Ambulance Booking System on your local machine.
 
-1️⃣ Prerequisites
+- 1️⃣ Prerequisites
 
 Make sure you have installed:
 Node.js (v16 or higher)
@@ -52,14 +81,14 @@ Git
 
 A working backend server (for API and Socket.io connection)
 
-2️⃣ Clone the Repository
+- 2️⃣ Clone the Repository
 **git clone https://github.com/your-username/ambulance-booking-frontend.git**
 cd **ambulance-booking-frontend**
 
-3️⃣ Install Dependencies
+- 3️⃣ Install Dependencies
 npm install
 
-4️⃣ Configure Environment Variables
+- 4️⃣ Configure Environment Variables
 
 Create a .env file in the root directory and add the following:
 
@@ -70,7 +99,7 @@ Create a .env file in the root directory and add the following:
 
 ⚠️ Make sure to replace the placeholder values with your actual keys and backend URL.
 
-5️⃣ Run the Application
+- 5️⃣ Run the Application
 Start the development server:
 npm start
 Then open: **http://localhost:3000**
