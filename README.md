@@ -1,8 +1,8 @@
  **🚑 AMBUGO - Ambulance Booking System**
 
-* The Ambulance Booking System is a Next.js-based web application designed to streamline ambulance booking and emergency response coordination.
-* It enables patients and drivers to interact in real time through a secure, intuitive, and responsive platform — ensuring faster and more efficient medical assistance during emergencies.
-* The frontend connects with the backend seamlessly via REST APIs and Socket.io, providing real-time driver tracking, instant booking updates, and live trip status monitoring.
+ The Ambulance Booking System is a Next.js-based web application designed to streamline ambulance booking and emergency response coordination.
+ It enables patients and drivers to interact in real time through a secure, intuitive, and responsive platform — ensuring faster and more efficient medical assistance during emergencies.
+ The frontend connects with the backend seamlessly via REST APIs and Socket.io, providing real-time driver tracking, instant booking updates, and live trip status monitoring.
 
 **💻 Overview:**
 🧭 Two interfaces: Client Panel and Driver Panel
@@ -48,16 +48,17 @@
 ---
 
 
-🧰 Tech Stack
-Technology	                Purpose
-Next.js (React Framework)	Core frontend framework
-Axios	                    API communication
-Socket.io Client	        Real-time driver and booking updates
-Firebase	                Client OTP authentication
-Google Maps API	            Location and tracking integration
-Tailwind CSS / CSS Modules	Styling and layout management
+### 🧰 Tech Stack
+Technology	              | Purpose
+Next.js (React Framework) |	Core frontend framework
+Axios	                  |  API communication
+Socket.io Client	      |  Real-time driver and booking updates
+Firebase	              |  Client OTP authentication
+Google Maps API	          |  Location and tracking integration
+Tailwind CSS / CSS Modules|	Styling and layout management
 
 ---
+
 ***API Documentaion***
 
 **🔒 Authentication Routes**
@@ -87,7 +88,7 @@ trip-status	Emits booking progress and completion updates
 
 Follow these steps to set up and run the Ambulance Booking System Frontend locally.
 
-1️⃣ Prerequisites
+*1️⃣ Prerequisites
 Ensure the following are installed:
 
 Node.js (v16 or later)
@@ -96,33 +97,32 @@ Git
 
 A running backend server for REST API and Socket.io connectivity
 
-2️⃣ Clone the Repository
+*2️⃣ Clone the Repository
 git clone https://github.com/your-username/ambulance-booking-frontend.git
 cd ambulance-booking-frontend
 
-3️⃣ Install Dependencies
+*3️⃣ Install Dependencies
 npm install
 
-4️⃣ Set Up Environment Variables
+*4️⃣ Set Up Environment Variables
 Create a .env file in the project root directory and add:
 
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 
-
 ⚠️ Replace the placeholder values with your actual credentials and backend URL.
 
-5️⃣ Run the Application
+*5️⃣ Run the Application
 Start the development server:
 npm run dev
 
 
-Open your browser and visit:
+*6️⃣Open your browser and visit:
 👉 http://localhost:3000
 💡 You should now see the Ambulance Booking System running and connected to your backend services.
 
-***🧪 Testing Guide***
+### 🧪 Testing Guide***
 
 To verify the system’s functionality:
 ✅ Test client OTP login using Firebase
@@ -132,13 +132,13 @@ To verify the system’s functionality:
 ✅ Validate responsiveness across devices
 ✅ Test Socket.io event flow (booking request → accept → complete)
 
-***🌐 Backend Integration***
+### 🌐 Backend Integration***
 
 Frontend communicates with backend via /api/... routes
 Uses Socket.io for instant updates between drivers and clients
 Implements JWT-based authentication for secure requests
 
-***🧱 Future Enhancements***
+### 🧱 Future Enhancements***
 
 📍 Advanced route optimization for drivers
 💳 Online Payment Integration (Razorpay / Stripe)
