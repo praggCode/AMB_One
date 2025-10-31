@@ -5,6 +5,8 @@ It allows patients and drivers to interact in real-time through a **secure, intu
 
 The frontend connects seamlessly with the backend via **REST APIs and Socket.io**, providing **real-time driver tracking, instant booking updates, and live trip status monitoring**.
 
+
+[👉 Know More](https://docs.google.com/document/d/1PusiJMiwpYbAUpjTGTYunxlPW24cd9GQwjgiNjclx7k/edit?tab=t.0#heading=h.namad6nbwei0)
 ---
 
 ## 💻 Overview
@@ -165,3 +167,4 @@ Implements JWT-based authentication for secure requests
 
 
 ---
+
