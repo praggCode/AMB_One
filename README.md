@@ -1,4 +1,4 @@
-# 🚑 AMBUGO - Ambulance Booking System
+# Ambulance Booking System
 
 The **Ambulance Booking System** is a **Next.js-based web application** designed to streamline ambulance booking and emergency response coordination.  
 It allows patients and drivers to interact in real-time through a **secure, intuitive, and responsive platform**, ensuring faster medical assistance during emergencies.  
@@ -167,4 +167,5 @@ Implements JWT-based authentication for secure requests
 
 
 ---
+
 
