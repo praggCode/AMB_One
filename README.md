@@ -47,6 +47,8 @@
 
 ---
 
+![App Banner](./images/erdiagram.jpeg)
+
 
 ### 🧰 Tech Stack
 Technology	              | Purpose
