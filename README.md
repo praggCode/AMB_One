@@ -47,7 +47,7 @@
 
 ---
 
-![App Banner](./images/erdiagram.jpeg)
+![App Banner](./frontend/images/erdiagram.jpeg)
 
 
 ### 🧰 Tech Stack
