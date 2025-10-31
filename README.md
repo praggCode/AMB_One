@@ -39,6 +39,47 @@ It connects seamlessly with the backend through REST APIs and Socket.io for real
 
 ---
 
+## 🛠️ How to Set Up and Run the Project Locally
+
+Follow these steps to set up and run the Ambulance Booking System on your local machine.
+
+1️⃣ Prerequisites
+
+Make sure you have installed:
+Node.js (v16 or higher)
+npm 
+Git
+
+A working backend server (for API and Socket.io connection)
+
+2️⃣ Clone the Repository
+**git clone https://github.com/your-username/ambulance-booking-frontend.git**
+cd **ambulance-booking-frontend**
+
+3️⃣ Install Dependencies
+npm install
+
+4️⃣ Configure Environment Variables
+
+Create a .env file in the root directory and add the following:
+
+**REACT_APP_API_BASE_URL=http://localhost:5000/api**
+**REACT_APP_FIREBASE_API_KEY=your_firebase_api_key**
+**REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_api_key**
+
+
+⚠️ Make sure to replace the placeholder values with your actual keys and backend URL.
+
+5️⃣ Run the Application
+Start the development server:
+npm start
+Then open: **http://localhost:3000**
+
+
+💡 The app should now connect to your backend and display the client and driver interfaces.
+
+
+
 ## 🧪 Testing
 
 - Test **client OTP login** using Firebase  
