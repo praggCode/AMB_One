@@ -21,3 +21,28 @@ module.exports.registerUser = async (req, res, next) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 }
+
+module.exports.loginUser = async (req, res, next) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({ errors: errors.array() })
+    } 
+    const {email, password} = req.body
+    try {
+        const user = await userService.findUserByEmail(email)
+        if (!user) {
+            return res.status(401).json({ error: "Invalid email or password" })
+        }
+        const isMatch = await userService.comparePassword(password, user.password)
+        if (!isMatch) {
+            return res.status(401).json({ error: "Invalid email or password" })
+        }
+
+        const token = generateAuthToken(user)
+
+        res.status(200).json({ user, token })
+    } catch (err) {
+        return res.status(500).json({ error: "Internal server error" })
+    }
+    
+}

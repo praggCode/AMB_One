@@ -1,6 +1,6 @@
-const { findUserByEmailOrPhone, createUser } = require("../models/user.model");
+const {findUserByEmailOrPhone, createUser: createUserModel, findUserByEmail, comparePassword,} = require("../models/user.model");
 
-module.exports.createUser = async ({ name, email, password, phone }) => {
+async function createUser({ name, email, password, phone }) {
   if (!name || !email || !password || !phone) {
     throw new Error("All fields are required to create a user.");
   }
@@ -10,6 +10,12 @@ module.exports.createUser = async ({ name, email, password, phone }) => {
     err.status = 400;
     throw err;
   }
-  const user = await createUser({ name, email, password, phone });
+  const user = await createUserModel({ name, email, password, phone });
   return user;
+}
+
+module.exports = {
+  createUser,
+  findUserByEmail,
+  comparePassword,
 };
