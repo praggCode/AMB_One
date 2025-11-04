@@ -1,6 +1,5 @@
-import Homepage from './homepage';
+import HomePage from './CSS/HomePage';
+
 export default function Home() {
-  return (
-    <Homepage/>
-  );
+  return <HomePage />;
 }
