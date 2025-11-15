@@ -1,7 +1,7 @@
 const { hashedPassword, generateAuthToken } = require('../models/user.model');
 const userService = require('../services/user.service');
 const { validationResult } = require('express-validator');
-const redisClient = require('../db/redis'); // Import Redis client
+const TokenBlacklist = require('../models/tokenBlacklist.model');
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
 module.exports.registerUser = async (req, res, next) => {
@@ -70,11 +70,12 @@ module.exports.logoutUser = async (req, res, next) => {
             return res.status(200).json({ message: "Logged out successfully (token invalid/no exp)" });
         }
 
-        const now = Math.floor(Date.now() / 1000); // Current time in seconds
-        const expiresIn = decoded.exp - now; // Remaining time in seconds
+        const expiresAt = new Date(decoded.exp * 1000);
+        const now = new Date();
 
-        if (expiresIn > 0) {
-            await redisClient.set(token, 'blacklisted', { EX: expiresIn });
+        if (expiresAt > now) {
+            const blacklistedToken = new TokenBlacklist({ token, expiresAt });
+            await blacklistedToken.save();
         }
 
         res.clearCookie('token');

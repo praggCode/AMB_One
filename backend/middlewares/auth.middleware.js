@@ -1,6 +1,6 @@
 const userModel = require('../models/user.model');
 const jwt = require('jsonwebtoken');
-const redisClient = require('../db/redis'); // Import Redis client
+const TokenBlacklist = require('../models/tokenBlacklist.model');
 
 module.exports.authUser = async (req, res, next) => {
     const token = req.cookies.token || (req.headers.authorization?.split(" ")[1]);
@@ -11,8 +11,8 @@ module.exports.authUser = async (req, res, next) => {
 
     try {
         // Check if the token is blacklisted
-        const isBlacklisted = await redisClient.get(token);
-        if (isBlacklisted) {
+        const blacklistedToken = await TokenBlacklist.findOne({ token });
+        if (blacklistedToken) {
             return res.status(401).json({ error: 'unauthorized - token blacklisted' });
         }
 
