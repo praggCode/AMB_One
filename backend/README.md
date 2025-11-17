@@ -2,9 +2,8 @@
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
 
 This repository contains the backend services for the Ambulance Booking application, providing a RESTful API for user management and authentication.
 
@@ -16,17 +15,56 @@ This repository contains the backend services for the Ambulance Booking applicat
 
 -   **Secure User Authentication**: Robust user registration and login system using JWTs.
 -   **Password Hashing**: Employs `bcrypt` for industry-standard secure password storage.
--   **Secure Logout**: Implements a token blacklist using Redis to immediately invalidate JWTs upon logout.
 -   **Input Validation**: All public endpoints use `express-validator` to sanitize and validate user input.
--   **ORM Integration**: Uses Prisma for type-safe and efficient database access.
+-   **ORM Integration**: Uses Mongoose for type-safe and efficient database access.
 
 ## Technologies & Architecture
 
 This project is built on a modern Node.js stack, designed for security and scalability.
 
 -   **Core**: [Node.js](https://nodejs.org/) and [Express.js](https://expressjs.com/) provide the foundation for the RESTful API.
--   **Database**: [MySQL](https://www.mysql.com/) is used as the primary database, managed by the [Prisma](https://www.prisma.io/) ORM for type-safe queries.
--   **Authentication & Token Blacklisting**: User sessions are managed via **JSON Web Tokens (JWT)**. For enhanced security, this project implements a **token blacklist** using [Redis](https://redis.io/).
-    -   **Why Blacklist?**: JWTs are stateless; once issued, they remain valid until expiration, even if a user logs out or their token is compromised. A server-side blacklist is essential to immediately invalidate such tokens.
-    -   **Why Redis?**: Redis is an in-memory database, offering high-speed performance crucial for checking the blacklist on every authenticated request without performance degradation. It also supports automatic key expiration, preventing the blacklist from growing indefinitely by removing expired tokens.
+-   **Database**: [MongoDB](https://www.mongodb.com/) is used as the primary database, managed by the [Mongoose](https://mongoosejs.com/) ORM for type-safe queries.
+
+## API Routes
+
+### User Routes
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/users/register` | Register a new user. |
+| `POST` | `/users/login` | Login a user. |
+| `GET` | `/users/profile` | Get user profile. |
+| `POST` | `/users/logout` | Logout a user. |
+
+### Driver Routes
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/driver/register` | Register a new driver. |
+| `POST` | `/driver/login` | Login a driver. |
+| `GET` | `/driver/profile` | Get driver profile. |
+| `POST` | `/driver/logout` | Logout a driver. |
+
+## Testing the API
+
+To test the API endpoints, you can use Postman.
+
+1.  Download and install Postman from [here](https://www.postman.com/downloads/).
+2.  Create a new request in Postman.
+3.  Set the request method to `POST`.
+4.  Set the request URL to `http://localhost:3000/users/register`.
+5.  Set the request body to `raw` and `JSON`.
+6.  Add the following JSON to the request body:
+    ```json
+    {
+        "email": "test@example.com",
+        "password": "password",
+        "name": "Test User",
+        "phone": "1234567890"
+    }
+    ```
+7.  Click on the `Send` button.
+8.  You should receive a response with a status code of `201`.
+9.  You can test the other endpoints in a similar way.
+
 
