@@ -1,4 +1,5 @@
-import HomePage from './CSS/HomePage';
+'use client';
+import HomePage from './CompPages/HomePage';
 
 export default function Home() {
   return <HomePage />;
