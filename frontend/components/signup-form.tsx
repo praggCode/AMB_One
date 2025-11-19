@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -10,12 +12,18 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { OTPForm } from "@/components/otp-form"
+import { useRouter } from 'next/navigation';
 
 export function SignupForm({
   className,
   role,
   ...props
 }: React.ComponentProps<"div"> & { role?: string }) {
+  const router = useRouter();
+  const handleCreateAccount = () => {
+    router.push(`/login?role=${role || 'user'}`);
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -62,7 +70,7 @@ export function SignupForm({
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Create Account</Button>
+                <Button type="button" onClick={handleCreateAccount}>Create Account</Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with

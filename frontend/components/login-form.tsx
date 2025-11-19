@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -9,12 +11,18 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { useRouter } from 'next/navigation';
 
 export function LoginForm({
   className,
   role,
   ...props
 }: React.ComponentProps<"div"> & { role?: string }) {
+  const router=useRouter()
+  const handletoDashboard=(e: React.MouseEvent<HTMLButtonElement>)=>{
+    e.preventDefault();
+    router.push(`/dashboard?role=${role || 'user'}`);
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -41,7 +49,7 @@ export function LoginForm({
                 <Input id="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit">LogIn</Button>
+                <Button type="button" onClick={handletoDashboard} >LogIn</Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
