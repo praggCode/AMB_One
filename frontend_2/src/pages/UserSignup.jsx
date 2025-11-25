@@ -16,31 +16,34 @@ const UserSignup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const newUser = {
-      fullname: {
-        firstname: firstName,
-        lastname: lastName,
-      },
+      name: `${firstName} ${lastName}`,
       email: email,
       phone: phone,
       password: password,
     };
 
-    const response = await axios.post(
-      `${import.meta.env.meta.VITE_BASE_URL}/users/register`,
-      newUser
-    );
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        newUser
+      );
 
-    if (response.status === 201) {
-      const data = response.data;
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      navigate("/home");
+      if (response.status === 201) {
+        const data = response.data;
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+      }
+      setEmail("");
+      setPhone("");
+      setFirstName("");
+      setLastName("");
+      setPassword("");
+    } catch (error) {
+      console.error("Signup error:", error);
+      const message = error.response?.data?.error || (error.response?.data?.errors ? error.response.data.errors.map(e => e.msg).join(', ') : 'Signup failed');
+      alert(message);
     }
-    setEmail("");
-    setPhone("");
-    setFirstName("");
-    setLastName("");
-    setPassword("");
   };
 
   return (
