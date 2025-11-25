@@ -10,7 +10,7 @@ module.exports.createDriver = async ({
     const newDriver = driverModel.create({
         fullname: {
             firstName: fullname.firstName,
-            lastName: fullname.lastName || ''
+            lastName: fullname.lastName
         },
         email,
         password,

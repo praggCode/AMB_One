@@ -11,19 +11,36 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { OTPForm } from "@/components/otp-form"
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useDriver } from "@/context/DriverContext";
 
-export function SignupForm({
+export function LoginForm({
   className,
   role,
   ...props
-}: React.ComponentProps<"div"> & { role?: string }) {
-  const router = useRouter();
-  const handleCreateAccount = () => {
-    router.push(`/login?role=${role || 'user'}`);
-  };
+}) {
+  const { login: userLogin } = useUser();
+  const { login: driverLogin } = useDriver();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    let result;
+    if (role === 'driver') {
+      result = await driverLogin(email, password);
+    } else {
+      result = await userLogin(email, password);
+    }
+
+    if (!result.success) {
+      setError(result.message || "Login failed");
+    }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -31,46 +48,35 @@ export function SignupForm({
           <form className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Create your account</h1>
+                <h1 className="text-2xl font-bold">Log In</h1>
                 <p className="text-muted-foreground text-sm text-balance">
-                  Enter your email below to create your account
+                  Enter your email below to Log in to your account
                 </p>
               </div>
-              <Field>
-                <FieldLabel htmlFor="email">Name</FieldLabel>
-                <Input
-                  id="name"
-                  type="name"
-                  placeholder="Enter Your Name"
-                  required
-                />
-              </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </Field>
-
-              <div className="mt-4">
-                <OTPForm className="border shadow-sm" />
-              </div>
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
                 <Input
                   id="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
+                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </Field>
               <Field>
-                <Button type="button" onClick={handleCreateAccount}>Create Account</Button>
+                <Button type="button" onClick={handleLogin} >LogIn</Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
@@ -83,7 +89,7 @@ export function SignupForm({
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Sign up with Apple</span>
+                  <span className="sr-only">Sign in with Apple</span>
                 </Button>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -92,7 +98,7 @@ export function SignupForm({
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Sign up with Google</span>
+                  <span className="sr-only">Sign in with Google</span>
                 </Button>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -101,11 +107,11 @@ export function SignupForm({
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Sign up with Meta</span>
+                  <span className="sr-only">Sign in with Meta</span>
                 </Button>
               </Field>
               <FieldDescription className="text-center">
-                Already have an account? <a href={`/login?role=${role || 'user'}`}>Login</a>
+                Don&apos;t have an account? <a href={`/signup?role=${role || 'user'}`}>Sign up</a>
               </FieldDescription>
             </FieldGroup>
           </form>
@@ -120,7 +126,7 @@ export function SignupForm({
             {role === 'user' && (
               <img
                 src="https://cdn.dribbble.com/userupload/7728833/file/original-3ae7e5086d82b643e7ed972e4c787564.jpg?resize=2048x1536&vertical=center"
-                alt="Image"
+                alt="User Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
             )}
