@@ -11,18 +11,55 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useDriver } from "@/context/DriverContext";
 
-export function LoginForm({
+export function SignupForm({
   className,
   role,
   ...props
-}: React.ComponentProps<"div"> & { role?: string }) {
-  const router=useRouter()
-  const handletoDashboard=(e: React.MouseEvent<HTMLButtonElement>)=>{
-    e.preventDefault();
-    router.push(`/dashboard?role=${role || 'user'}`);
-  }
+}) {
+  const { register: userRegister } = useUser();
+  const { register: driverRegister } = useDriver();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
+
+  const handleCreateAccount = async () => {
+    setError("");
+    let result;
+
+    if (role === 'driver') {
+      const nameParts = name.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(" ");
+
+      result = await driverRegister({
+        email,
+        password,
+        fullname: {
+          firstName,
+          lastName: lastName || undefined
+        },
+        phoneNumber: phone
+      });
+    } else {
+      result = await userRegister({
+        email,
+        password,
+        name,
+        phone
+      });
+    }
+
+    if (!result.success) {
+      setError(result.message || "Registration failed");
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -30,26 +67,62 @@ export function LoginForm({
           <form className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Log In</h1>
+                <h1 className="text-2xl font-bold">Create your account</h1>
                 <p className="text-muted-foreground text-sm text-balance">
-                  Enter your email below to Log in to your account
+                  Enter your email below to create your account
                 </p>
               </div>
+              <Field>
+                <FieldLabel htmlFor="email">Name</FieldLabel>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Enter Your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </Field>
               <Field>
+                <FieldLabel htmlFor="phone">Phone</FieldLabel>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="1234567890"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </Field>
+
+
+              <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <FieldDescription>
+                  Must be at least 8 characters long.
+                </FieldDescription>
               </Field>
               <Field>
-                <Button type="button" onClick={handletoDashboard} >LogIn</Button>
+                <Button type="button" onClick={handleCreateAccount}>Create Account</Button>
+                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
@@ -62,7 +135,7 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Sign in with Apple</span>
+                  <span className="sr-only">Sign up with Apple</span>
                 </Button>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -71,7 +144,7 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Sign in with Google</span>
+                  <span className="sr-only">Sign up with Google</span>
                 </Button>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -80,11 +153,11 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Sign in with Meta</span>
+                  <span className="sr-only">Sign up with Meta</span>
                 </Button>
               </Field>
               <FieldDescription className="text-center">
-                Don't have an account? <a href={`/signup?role=${role || 'user'}`}>Sign up</a>
+                Already have an account? <a href={`/login?role=${role || 'user'}`}>Login</a>
               </FieldDescription>
             </FieldGroup>
           </form>
@@ -99,7 +172,7 @@ export function LoginForm({
             {role === 'user' && (
               <img
                 src="https://cdn.dribbble.com/userupload/7728833/file/original-3ae7e5086d82b643e7ed972e4c787564.jpg?resize=2048x1536&vertical=center"
-                alt="User Image"
+                alt="Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
             )}

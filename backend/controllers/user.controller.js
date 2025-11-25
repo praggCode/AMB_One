@@ -25,6 +25,7 @@ module.exports.registerUser = async (req, res, next) => {
       phone,
     });
     const token = User.generateAuthToken(user);
+    res.cookie("token", token);
     res.status(201).json({ user, token });
   } catch (err) {
     console.error("Register error:", err.message, err.stack);

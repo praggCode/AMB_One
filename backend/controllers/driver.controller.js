@@ -14,7 +14,7 @@ module.exports.registerDriver = async (req, res) => {
     const hashedPassword = await driverModel.hashPassword(password)
     const existingDriver = await DriverService.findDriverByEmail(email)
     if(existingDriver) {
-        return  res.status(400).json({message: 'Driver with this email already exists'})
+        return res.status(400).json({error: "Driver already exists"})
     }
 
     const driver = await DriverService.createDriver({
@@ -25,6 +25,7 @@ module.exports.registerDriver = async (req, res) => {
     })
 
     const token = driverModel.generateAuthToken(driver)
+    res.cookie('token', token)
     res.status(201).json({token, driver})
 }
 
@@ -51,7 +52,6 @@ module.exports.loginDriver = async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({ error: "Internal server error" })
     }
-    
 }
 
 module.exports.getDriverProfile = async (req, res, next) => {
