@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { CaptainDataContext } from "../context/CaptainDataContext";
 
 const CaptainSignup = () => {
   const [email, setEmail] = useState("");
@@ -7,20 +9,39 @@ const CaptainSignup = () => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userData, setUserData] = useState({});
+
+
+  const { setCaptain } = React.useContext(CaptainDataContext);
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setUserData({
+    const captainData = {
       fullname: {
-        firstname: firstName,
-        lastname: lastName,
+        firstName: firstName,
+        lastName: lastName,
       },
       email: email,
-      phone: phone,
+      phoneNumber: phone,
       password: password,
-    });
-    console.log(userData);
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/driver/register`,
+        captainData
+      );
+
+      if (response.status === 201) {
+        const data = response.data;
+        setCaptain(data.driver);
+        localStorage.setItem("token", data.token);
+        navigate("/captain-home");
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
+
     setEmail("");
     setPhone("");
     setFirstName("");
