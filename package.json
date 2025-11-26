@@ -1,0 +1,25 @@
+{
+  "name": "ambulance_booking",
+  "version": "1.0.0",
+  "description": "The **Ambulance Booking System** is a **Next.js-based web application** designed to streamline ambulance booking and emergency response coordination.  \r It allows patients and drivers to interact in real-time through a **secure, intuitive, and responsive platform**, ensuring faster medical assistance during emergencies.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hariksh/Ambulance_Booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hariksh/Ambulance_Booking/issues"
+  },
+  "homepage": "https://github.com/Hariksh/Ambulance_Booking#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
