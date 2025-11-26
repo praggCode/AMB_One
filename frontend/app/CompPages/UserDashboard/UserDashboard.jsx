@@ -19,6 +19,7 @@ const formatDate = (timestamp) => {
 export default function UserDashboard() {
   const router = useRouter();
   const [currentBooking, setCurrentBooking] = useState(null);
+  const assigned = currentBooking?.status === 'Accepted';
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -26,6 +27,13 @@ export default function UserDashboard() {
     if (stored) {
       setCurrentBooking(JSON.parse(stored));
     }
+    const onStorage = (e) => {
+      if (e.key === 'currentBooking') {
+        setCurrentBooking(e.newValue ? JSON.parse(e.newValue) : null);
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
   }, []);
 
   const handleClearBooking = () => {
@@ -143,11 +151,11 @@ export default function UserDashboard() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-sm text-gray-600">
                       <span>Assignment:</span>
-                      <span className="text-gray-900 font-medium">Pending</span>
+                      <span className="text-gray-900 font-medium">{assigned ? 'Assigned' : 'Pending'}</span>
                     </div>
                     <div className="flex items-center gap-2 text-gray-600">
                       <Phone className="w-4 h-4" />
-                      <span className="text-sm">We’ll notify you once a driver is assigned.</span>
+                      <span className="text-sm">{assigned ? 'A driver has accepted your booking.' : "We'll notify you once a driver is assigned."}</span>
                     </div>
                   </div>
                 </div>
@@ -168,18 +176,6 @@ export default function UserDashboard() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Bottom Buttons */}
-        <div className="grid grid-cols-2 gap-4">
-          <button className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-md transition-shadow">
-            <h4 className="text-xl font-bold text-gray-900 mb-2">View History</h4>
-            <p className="text-gray-600">See your past bookings</p>
-          </button>
-          <button className="bg-white border border-gray-200 rounded-lg p-8 hover:shadow-md transition-shadow">
-            <h4 className="text-xl font-bold text-gray-900 mb-2">Emergency Contacts</h4>
-            <p className="text-gray-600">Manage your contacts</p>
-          </button>
         </div>
       </main>
     </div>
