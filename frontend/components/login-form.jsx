@@ -14,17 +14,6 @@ export function LoginForm({
   className,
   role,
   ...props
-<<<<<<< HEAD:frontend/components/login-form.tsx
-}: React.ComponentProps<"div"> & { role?: string }) {
-  const router = useRouter()
-  const handletoDashboard = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (role === 'driver') {
-      router.push('/DriverPages');
-    } else {
-      router.push(`/dashboard?role=${role || 'user'}`);
-    }
-  }
 }) {
   const { login: userLogin } = useUser();
   const { login: driverLogin } = useDriver();
@@ -47,7 +36,6 @@ export function LoginForm({
       setError(result.message || "Login failed");
     }
   };
->>>>>>> 6c9d9211fe6ad3f4eedf10b84cba66481cedd17a:frontend/components/login-form.jsx
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
