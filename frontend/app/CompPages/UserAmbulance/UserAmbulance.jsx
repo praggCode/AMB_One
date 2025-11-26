@@ -185,7 +185,7 @@ export default function UserAmbulance() {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 rounded-lg bg-[#0FADAD] px-4 py-3 font-semibold text-white transition hover:bg-[#0b8686]"
+                    className="flex-1 rounded-lg bg-[#D70040] px-4 py-3 font-semibold text-white transition"
                     disabled={submitting}
                   >
                     {submitting ? 'Booking…' : 'Confirm Booking'}

@@ -18,10 +18,14 @@ export function LoginForm({
   role,
   ...props
 }: React.ComponentProps<"div"> & { role?: string }) {
-  const router=useRouter()
-  const handletoDashboard=(e: React.MouseEvent<HTMLButtonElement>)=>{
+  const router = useRouter()
+  const handletoDashboard = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    router.push(`/dashboard?role=${role || 'user'}`);
+    if (role === 'driver') {
+      router.push('/DriverPages');
+    } else {
+      router.push(`/dashboard?role=${role || 'user'}`);
+    }
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

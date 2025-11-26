@@ -3,13 +3,13 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-const tabs = [
+const defaultTabs = [
   { label: 'Dashboard', href: '/CompPages/UserDashboard' },
   { label: 'Book Ambulance', href: '/CompPages/UserAmbulance' },
   { label: 'History', href: '/CompPages/UserHistory' },
 ];
 
-export default function UserNav({ active = '' }) {
+export default function UserNav({ active = '', tabs = defaultTabs }) {
   const router = useRouter();
 
   return (
@@ -30,8 +30,8 @@ export default function UserNav({ active = '' }) {
             return (
               <button
                 key={tab.href}
-                className={`transition ${
-                  isActive ? 'text-[#D70040] font-semibold' : 'hover:text-gray-900'
+                className={`transition hover:underline underline-offset-4 ${
+                  isActive ? 'text-[#D70040] font-semibold' : 'text-gray-600 hover:text-gray-900'
                 }`}
                 onClick={() => router.push(tab.href)}
               >
