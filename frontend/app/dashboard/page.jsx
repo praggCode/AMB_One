@@ -2,8 +2,9 @@
 
 import { useSearchParams } from 'next/navigation';
 import UserDashboard from '../CompPages/UserDashboard/UserDashboard';
+import { Suspense } from 'react';
 
-export default function DashboardPage() {
+function DashboardContent() {
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'user';
 
@@ -18,5 +19,13 @@ export default function DashboardPage() {
         <p className="text-gray-600">Coming soon.</p>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }
