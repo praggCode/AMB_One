@@ -18,7 +18,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 
-export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
+export function OTPForm({ ...props }) {
   return (
     <Card {...props}>
       <CardHeader>
@@ -40,7 +40,7 @@ export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
                   <InputOTPSlot index={5} />
                 </InputOTPGroup>
               </InputOTP>
-             
+
             </Field>
             <FieldGroup>
               <Button type="submit">Verify</Button>

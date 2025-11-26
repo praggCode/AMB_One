@@ -1,16 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import UserNav from "@/components/UserNav";
-import {
-    ArrowLeft,
-    MapPin,
-    Clock,
-    CheckCircle2,
-    Calendar,
-    Trash2
-} from "lucide-react";
+import {Clock,CheckCircle2,Calendar,Trash2} from "lucide-react";
 
 export default function DriverHistory() {
     const [historyTrips, setHistoryTrips] = useState([]);

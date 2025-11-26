@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import UserNav from "@/components/UserNav";
 import { useRouter } from "next/navigation";
-import {ArrowLeft,MapPin,User,Clock,CheckCircle2,XCircle} from "lucide-react";
+import {MapPin,User,Clock,CheckCircle2,XCircle} from "lucide-react";
 
 export default function TripDetailsNewRequest({ params }) {
     const router = useRouter();
