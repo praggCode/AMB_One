@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, User, FileText } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import UserNav from '@/components/UserNav';
 import dynamic from 'next/dynamic';
+import { useUser } from '@/context/UserContext';
+import api from '../../../lib/api';
 import AddressAutocomplete from '@/components/AddressAutocomplete';
 
 const MapComponent = dynamic(() => import('@/components/MapComponent'), {
@@ -22,11 +24,21 @@ const initialForm = {
 
 export default function UserAmbulance() {
   const router = useRouter();
+  const { user, loading } = useUser();
   const [formData, setFormData] = useState(initialForm);
   const [pickupCoords, setPickupCoords] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (!user) return null;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -53,7 +65,7 @@ export default function UserAmbulance() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!formData.pickupLocation || !formData.destination || !formData.patientName) {
@@ -65,37 +77,55 @@ export default function UserAmbulance() {
     }
 
     setSubmitting(true);
-    const bookingId = `BK${Date.now().toString().slice(-6)}`;
+
+    const mockDistance = 5;
+    const fare = mockDistance * 20;
 
     const bookingPayload = {
-      id: bookingId,
-      pickupLocation: formData.pickupLocation,
+      pickup: formData.pickupLocation,
       destination: formData.destination,
-      pickupCoords,
-      destinationCoords,
+      fare: fare,
       patientName: formData.patientName,
       patientPhone: formData.patientPhone,
       notes: formData.notes,
-      createdAt: new Date().toISOString(),
-      status: 'Pending',
+      pickupCoords,
+      destinationCoords
     };
 
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('currentBooking', JSON.stringify(bookingPayload));
-    }
+    try {
+      const { data } = await api.post('/bookings/create', bookingPayload);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('currentBooking', JSON.stringify(data));
+      }
 
-    setFeedback({
-      type: 'success',
-      message: 'Booking saved! Redirecting to dashboard…',
-    });
-    setFormData(initialForm);
-    setPickupCoords(null);
-    setDestinationCoords(null);
+      setFeedback({
+        type: 'success',
+        message: 'Booking saved! Redirecting to dashboard…',
+      });
+      setFormData(initialForm);
+      setPickupCoords(null);
+      setDestinationCoords(null);
 
-    setTimeout(() => {
+      setTimeout(() => {
+        setSubmitting(false);
+        router.push('/CompPages/UserDashboard');
+      }, 1200);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setFeedback({
+          type: 'error',
+          message: 'Session expired. Please login again.',
+        });
+        setTimeout(() => router.push('/login'), 2000);
+      } else {
+        console.error("Booking failed", error);
+        setFeedback({
+          type: 'error',
+          message: error.response?.data?.message || 'Failed to create booking. Please try again.',
+        });
+      }
       setSubmitting(false);
-      router.push('/CompPages/UserDashboard');
-    }, 1200);
+    }
   };
 
   return (
@@ -195,24 +225,24 @@ export default function UserAmbulance() {
                 </div>
               )}
 
-                <div className="flex gap-4 pt-2">
-                  <button
-                    type="button"
-                    className="flex-1 rounded-lg border border-gray-200 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
-                    onClick={() => router.push('/CompPages/UserDashboard')}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 rounded-lg bg-[#D70040] px-4 py-3 font-semibold text-white transition"
-                    disabled={submitting}
-                  >
-                    {submitting ? 'Booking…' : 'Confirm Booking'}
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="flex gap-4 pt-2">
+                <button
+                  type="button"
+                  className="flex-1 rounded-lg border border-gray-200 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
+                  onClick={() => router.push('/CompPages/UserDashboard')}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 rounded-lg bg-[#D70040] px-4 py-3 font-semibold text-white transition"
+                  disabled={submitting}
+                >
+                  {submitting ? 'Booking…' : 'Confirm Booking'}
+                </button>
+              </div>
+            </form>
+          </div>
         </section>
       </main>
     </div>

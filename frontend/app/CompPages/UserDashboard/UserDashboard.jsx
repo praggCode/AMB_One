@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Clock, MapPin, User, Phone } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import UserNav from '@/components/UserNav';
+import api from '../../../lib/api';
+import { useUser } from '@/context/UserContext';
 
 const formatDate = (timestamp) => {
   try {
@@ -18,23 +20,39 @@ const formatDate = (timestamp) => {
 
 export default function UserDashboard() {
   const router = useRouter();
+  const { user, loading } = useUser();
   const [currentBooking, setCurrentBooking] = useState(null);
-  const assigned = currentBooking?.status === 'Accepted';
+  const assigned = currentBooking?.status === 'Accepted' || currentBooking?.status === 'accepted';
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const stored = localStorage.getItem('currentBooking');
-    if (stored) {
-      setCurrentBooking(JSON.parse(stored));
+    if (!loading && !user) {
+      router.push('/login');
     }
-    const onStorage = (e) => {
-      if (e.key === 'currentBooking') {
-        setCurrentBooking(e.newValue ? JSON.parse(e.newValue) : null);
+  }, [user, loading, router]);
+
+  useEffect(() => {
+    const fetchActiveBooking = async () => {
+      if (!user) return;
+      try {
+        const { data } = await api.get('/users/history');
+        // Find the most recent active booking (pending or accepted)
+        const active = data.find(b => b.status === 'pending' || b.status === 'accepted' || b.status === 'Pending' || b.status === 'Accepted');
+        setCurrentBooking(active || null);
+      } catch (error) {
+        if (error.response?.status === 401) {
+          router.push('/login');
+        } else {
+          console.error("Failed to fetch active booking:", error);
+        }
       }
     };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+    if (user) {
+      fetchActiveBooking();
+    }
+  }, [user]);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (!user) return null;
 
   const handleClearBooking = () => {
     if (typeof window !== 'undefined') {
@@ -52,7 +70,7 @@ export default function UserDashboard() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h2>
-            <p className="text-gray-600 text-lg">Welcome back!</p>
+            <p className="text-gray-600 text-lg">Welcome back, {user?.name}!</p>
           </div>
           <button
             className="bg-[#D70040] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#B8003A] transition-colors flex items-center gap-2"
@@ -99,7 +117,7 @@ export default function UserDashboard() {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      Booking #{currentBooking.id}
+                      Booking #{currentBooking.bookingId || currentBooking._id?.slice(-6).toUpperCase()}
                     </h4>
                     <div className="flex items-center gap-2 text-gray-600">
                       <Clock className="w-4 h-4" />

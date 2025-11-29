@@ -4,8 +4,10 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken"); // Import jsonwebtoken
 
 module.exports.registerUser = async (req, res, next) => {
+  console.log("Register Request Body:", req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log("Validation Errors:", errors.array());
     return res.status(400).json({ errors: errors.array() });
   }
   try {
@@ -71,4 +73,15 @@ module.exports.getUserProfile = async (req, res, next) => {
 module.exports.logoutUser = async (req, res, next) => {
   res.clearCookie("token");
   return res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports.getUserHistory = async (req, res, next) => {
+  try {
+    const Booking = require("../models/booking.model");
+    const history = await Booking.find({ user: req.user._id }).sort({ createdAt: -1 });
+    res.status(200).json(history);
+  } catch (err) {
+    console.error("Error fetching history:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };

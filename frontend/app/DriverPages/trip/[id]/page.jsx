@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import UserNav from "@/components/UserNav";
 import { useRouter } from "next/navigation";
 import {MapPin,User,Clock,Phone,Navigation,CheckCircle2} from "lucide-react";
+import api from '../../../../lib/api';
 
 export default function TripDetailsAccepted({ params }) {
     const router = useRouter();
@@ -15,28 +16,26 @@ export default function TripDetailsAccepted({ params }) {
     ];
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-        const stored = localStorage.getItem("driverCurrentTrip");
-        if (stored) {
-            const data = JSON.parse(stored);
-            if (data?.id === id) setTrip(data);
-        }
+        const fetchTrip = async () => {
+            if (!id) return;
+            try {
+                const { data } = await api.get(`/bookings/${id}`);
+                setTrip(data);
+            } catch (error) {
+                console.error("Failed to fetch trip details:", error);
+            }
+        };
+        fetchTrip();
     }, [id]);
 
-    const handleComplete = () => {
+    const handleComplete = async () => {
         if (typeof window === "undefined" || !trip) return;
-        const historyRaw = localStorage.getItem("driverHistory");
-        const history = historyRaw ? JSON.parse(historyRaw) : [];
-        const record = { ...trip, status: "Completed" };
-        localStorage.setItem("driverHistory", JSON.stringify([record, ...history]));
-
-        const userHistoryRaw = localStorage.getItem("userHistory");
-        const userHistory = userHistoryRaw ? JSON.parse(userHistoryRaw) : [];
-        localStorage.setItem("userHistory", JSON.stringify([record, ...userHistory]));
-
-        localStorage.removeItem("driverCurrentTrip");
-        localStorage.removeItem("currentBooking");
-        router.push(`/DriverPages/history`);
+        try {
+            await api.put(`/bookings/${trip._id}/status`, { status: 'completed' });
+            router.push(`/DriverPages/history`);
+        } catch (error) {
+            console.error("Failed to complete trip", error);
+        }
     };
 
     return (
@@ -47,7 +46,7 @@ export default function TripDetailsAccepted({ params }) {
                 <div className="flex items-center justify-between mb-4">
                     <div>
                         <h1 className="text-xl font-bold text-gray-900">Trip Details</h1>
-                        <p className="text-sm text-gray-500">Trip #{trip?.id}</p>
+                        <p className="text-sm text-gray-500">Trip #{trip?.bookingId}</p>
                     </div>
                     <span className="px-3 py-1 bg-[#D70040] text-white text-xs font-bold rounded-full uppercase tracking-wide">Accepted</span>
                 </div>

@@ -6,6 +6,11 @@ const bookingSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    bookingId: {
+        type: String,
+        required: true,
+        unique: true
+    },
     driver: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Driver'
@@ -21,6 +26,24 @@ const bookingSchema = new mongoose.Schema({
     fare: {
         type: Number,
         required: true
+    },
+    patientName: {
+        type: String,
+        required: true
+    },
+    patientPhone: {
+        type: String
+    },
+    notes: {
+        type: String
+    },
+    pickupCoords: {
+        lat: Number,
+        lon: Number
+    },
+    destinationCoords: {
+        lat: Number,
+        lon: Number
     },
     status: {
         type: String,

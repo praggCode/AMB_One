@@ -2,46 +2,64 @@ const userModel = require('../models/user.model');
 const driverModel = require('../models/driver.model');
 const jwt = require('jsonwebtoken');
 
-module.exports.authUser = async (req, res, next) => {
-    const token = req.cookies.token || (req.headers.authorization?.split(" ")[1]);
-
-    if (!token) {
-        return res.status(401).json({ error: 'unauthorized' });
-    }
-
+const verifyToken = (token) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await userModel.findUserByEmail(decoded.email)
-        if (!user) {
-            return res.status(401).json({ error: 'unauthorized' });
-        }
-        req.user = user
-        next();
+        return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+        return null;
     }
-    catch (err){
+};
+
+module.exports.authUser = async (req, res, next) => {
+    const cookieToken = req.cookies.token;
+    const headerToken = req.headers.authorization?.split(" ")[1];
+
+    const checkToken = async (token) => {
+        if (!token) return null;
+        try {
+            const decoded = verifyToken(token);
+            if (!decoded || decoded.role !== 'user') return null;
+            const user = await userModel.findUserByEmail(decoded.email);
+            return user;
+        } catch (err) {
+            return null;
+        }
+    };
+    let user = await checkToken(cookieToken);
+    if (!user) {
+        user = await checkToken(headerToken);
+    }
+    if (!user) {
         return res.status(401).json({ error: 'unauthorized' });
     }
 
+    req.user = user;
+    next();
 }
 
 module.exports.authDriver = async (req, res, next) => {
-    const token = req.cookies.token || (req.headers.authorization?.split(" ")[1]);
-
-    if (!token) {
-        return res.status(401).json({ error: 'unauthorized' });
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const driver = await driverModel.findDriverByEmail(decoded.email)
-        if (!driver) {
-            return res.status(401).json({ error: 'unauthorized' });
+    const cookieToken = req.cookies.token;
+    const headerToken = req.headers.authorization?.split(" ")[1];
+    const checkToken = async (token) => {
+        if (!token) return null;
+        try {
+            const decoded = verifyToken(token);
+            if (!decoded || decoded.role !== 'driver') return null;
+            const driver = await driverModel.findDriverByEmail(decoded.email);
+            return driver;
+        } catch (err) {
+            return null;
         }
-        req.driver = driver
-        next();
+    };
+    let driver = await checkToken(cookieToken);
+    if (!driver) {
+        driver = await checkToken(headerToken);
     }
-    catch (err){
+
+    if (!driver) {
         return res.status(401).json({ error: 'unauthorized' });
     }
 
+    req.driver = driver;
+    next();
 }

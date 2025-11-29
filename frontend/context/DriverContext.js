@@ -17,7 +17,7 @@ export const DriverProvider = ({ children }) => {
     const checkDriverLoggedIn = async () => {
         try {
             const { data } = await api.get('/driver/profile');
-            setDriver(data.driver);
+            setDriver(data);
         } catch (error) {
             if (error.response?.status !== 401) {
                 console.error("Driver not logged in", error);
@@ -32,10 +32,15 @@ export const DriverProvider = ({ children }) => {
         try {
             const { data } = await api.post('/driver/login', { email, password });
             setDriver(data.driver);
-            router.push('/driver/dashboard'); // Adjust route
+            if (data.token) {
+                localStorage.setItem('driverToken', data.token);
+            }
+            router.push('/DriverPages'); // Adjust route
             return { success: true };
         } catch (error) {
-            console.error("Login failed", error);
+            if (error.response?.status !== 401) {
+                console.error("Login failed", error);
+            }
             const message = error.response?.data?.message || error.response?.data?.error || 'Login failed';
             return { success: false, message };
         }
@@ -45,7 +50,10 @@ export const DriverProvider = ({ children }) => {
         try {
             const { data } = await api.post('/driver/register', driverData);
             setDriver(data.driver);
-            router.push('/driver/dashboard');
+            if (data.token) {
+                localStorage.setItem('driverToken', data.token);
+            }
+            router.push('/DriverPages');
             return { success: true };
         } catch (error) {
             console.error("Registration failed", error);
@@ -58,6 +66,7 @@ export const DriverProvider = ({ children }) => {
         try {
             await api.post('/driver/logout');
             setDriver(null);
+            localStorage.removeItem('driverToken');
             router.push('/login?role=driver');
         } catch (error) {
             console.error("Logout failed", error);

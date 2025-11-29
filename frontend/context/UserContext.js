@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
     const checkUserLoggedIn = async () => {
         try {
             const { data } = await api.get('/users/profile');
-            setUser(data.user);
+            setUser(data);
         } catch (error) {
             if (error.response?.status !== 401) {
                 console.error("Not logged in", error);
@@ -32,10 +32,15 @@ export const UserProvider = ({ children }) => {
         try {
             const { data } = await api.post('/users/login', { email, password });
             setUser(data.user);
+            if (data.token) {
+                localStorage.setItem('userToken', data.token);
+            }
             router.push('/dashboard');
             return { success: true };
         } catch (error) {
-            console.error("Login failed", error);
+            if (error.response?.status !== 401) {
+                console.error("Login failed", error);
+            }
             const message = error.response?.data?.message || error.response?.data?.error || 'Login failed';
             return { success: false, message };
         }
@@ -45,6 +50,9 @@ export const UserProvider = ({ children }) => {
         try {
             const { data } = await api.post('/users/register', userData);
             setUser(data.user);
+            if (data.token) {
+                localStorage.setItem('userToken', data.token);
+            }
             router.push('/dashboard');
             return { success: true };
         } catch (error) {
@@ -58,6 +66,7 @@ export const UserProvider = ({ children }) => {
         try {
             await api.post('/users/logout');
             setUser(null);
+            localStorage.removeItem('userToken');
             router.push('/login');
         } catch (error) {
             console.error("Logout failed", error);
