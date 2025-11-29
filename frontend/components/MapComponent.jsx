@@ -91,7 +91,7 @@ const MapClickHandler = ({ onLocationSelect }) => {
     );
 };
 
-const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove }) => {
+const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove, readOnly = false }) => {
     const defaultCenter = [20.5937, 78.9629]; // India center
 
     return (
@@ -111,12 +111,14 @@ const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove 
                     <Popup>
                         <div className="p-2">
                             <p className="font-medium mb-2">Pickup Location</p>
-                            <button
-                                onClick={() => onLocationRemove('pickup')}
-                                className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 transition w-full"
-                            >
-                                Remove
-                            </button>
+                            {!readOnly && (
+                                <button
+                                    onClick={() => onLocationRemove('pickup')}
+                                    className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 transition w-full"
+                                >
+                                    Remove
+                                </button>
+                            )}
                         </div>
                     </Popup>
                 </Marker>
@@ -127,19 +129,21 @@ const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove 
                     <Popup>
                         <div className="p-2">
                             <p className="font-medium mb-2">Destination</p>
-                            <button
-                                onClick={() => onLocationRemove('destination')}
-                                className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 transition w-full"
-                            >
-                                Remove
-                            </button>
+                            {!readOnly && (
+                                <button
+                                    onClick={() => onLocationRemove('destination')}
+                                    className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 transition w-full"
+                                >
+                                    Remove
+                                </button>
+                            )}
                         </div>
                     </Popup>
                 </Marker>
             )}
 
             <MapUpdater pickup={pickup} destination={destination} />
-            <MapClickHandler onLocationSelect={onLocationSelect} />
+            {!readOnly && <MapClickHandler onLocationSelect={onLocationSelect} />}
         </MapContainer>
     );
 };

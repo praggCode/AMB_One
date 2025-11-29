@@ -3,15 +3,45 @@
 import React, { useEffect, useState } from 'react';
 import UserNav from '@/components/UserNav';
 import { Clock, MapPin } from 'lucide-react';
+import api from '../../../lib/api';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/context/UserContext';
 
 export default function UserHistory() {
+  const router = useRouter();
+  const { user, loading } = useUser();
   const [history, setHistory] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const raw = localStorage.getItem('userHistory');
-    if (raw) setHistory(JSON.parse(raw));
-  }, []);
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      if (!user) return;
+      try {
+        const { data } = await api.get('/users/history');
+        setHistory(data);
+      } catch (error) {
+        if (error.response?.status === 401) {
+          router.push('/login');
+        } else {
+          console.error("Failed to fetch history:", error);
+        }
+      } finally {
+        setHistoryLoading(false);
+      }
+    };
+    if (user) {
+      fetchHistory();
+    }
+  }, [user, router]);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -22,18 +52,22 @@ export default function UserHistory() {
           <p className="mt-1 text-gray-600">Completed trips</p>
         </div>
 
-        {history.length === 0 ? (
+        {historyLoading ? (
+          <div className="text-center py-10 text-gray-500">Loading history...</div>
+        ) : history.length === 0 ? (
           <div className="rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm">
             <p className="text-gray-600">No completed trips yet.</p>
           </div>
         ) : (
           <div className="space-y-4">
             {history.map((trip) => (
-              <div key={trip.id} className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div key={trip._id} className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <span className="font-semibold text-gray-900">Trip #{trip.id}</span>
-                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700">Completed</span>
+                    <span className="font-semibold text-gray-900">Trip #{trip.bookingId || trip._id?.slice(-6).toUpperCase()}</span>
+                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700">
+                      {trip.status.charAt(0).toUpperCase() + trip.status.slice(1)}
+                    </span>
                   </div>
                   <span className="text-sm font-semibold text-gray-900">₹{Number(trip?.distanceKm || 0) * 20}</span>
                 </div>

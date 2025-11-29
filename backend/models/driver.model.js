@@ -47,7 +47,7 @@ const driverSchema = new mongoose.Schema({
 });
 
 driverSchema.statics.generateAuthToken = function (driver) {
-  const token = jwt.sign({ email: driver.email }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ email: driver.email, role: 'driver' }, process.env.JWT_SECRET, {
     expiresIn: "24h",
   });
   return token;
@@ -59,7 +59,7 @@ driverSchema.statics.hashPassword = async function (password) {
 };
 
 driverSchema.statics.findDriverByEmail = async function (email) {
-    return await this.findOne({ email });
+  return await this.findOne({ email });
 }
 
 const Driver = mongoose.model("Driver", driverSchema);

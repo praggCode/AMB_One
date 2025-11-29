@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import UserNav from "@/components/UserNav";
-import {Clock,CheckCircle2,Calendar,Trash2} from "lucide-react";
+import { Clock, CheckCircle2, Calendar, Trash2 } from "lucide-react";
+import api from '../../../lib/api';
 
 export default function DriverHistory() {
     const [historyTrips, setHistoryTrips] = useState([]);
@@ -12,20 +13,20 @@ export default function DriverHistory() {
     ];
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-        const raw = localStorage.getItem("driverHistory");
-        if (raw) setHistoryTrips(JSON.parse(raw));
+        const fetchHistory = async () => {
+            try {
+                const { data } = await api.get('/bookings/driver-history');
+                const pastTrips = data.filter(t => t.status === 'completed' || t.status === 'cancelled' || t.status === 'Completed' || t.status === 'Cancelled' || t.status === 'Declined');
+                setHistoryTrips(pastTrips);
+            } catch (error) {
+                if (error.response?.status !== 401) {
+                    console.error("Failed to fetch driver history:", error);
+                }
+            }
+        };
+        fetchHistory()
     }, []);
 
-    const handleDelete = (tripId) => {
-        setHistoryTrips((prev) => {
-            const updated = prev.filter((t) => t.id !== tripId);
-            if (typeof window !== "undefined") {
-                localStorage.setItem("driverHistory", JSON.stringify(updated));
-            }
-            return updated;
-        });
-    };
 
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
@@ -48,28 +49,20 @@ export default function DriverHistory() {
                 </div>
 
                 <div className="space-y-4">
-                    {historyTrips.map((trip) => (
-                        <div key={trip.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
-                             <div className="flex justify-between items-start mb-3">
-                                 <div className="flex items-center gap-2">
-                                     <span className="font-bold text-gray-900">Trip #{trip.id}</span>
-                                     <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full flex items-center gap-1">
-                                         <CheckCircle2 size={10} />
-                                         {trip.status}
-                                     </span>
-                                 </div>
+                    {historyTrips.map((trip, index) => (
+                        <div key={trip._id || trip.id || index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start mb-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="font-bold text-gray-900">Trip #{trip.bookingId || trip.id}</span>
+                                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full flex items-center gap-1">
+                                        <CheckCircle2 size={10} />
+                                        {trip.status}
+                                    </span>
+                                </div>
                                 <div className="flex items-center gap-3">
                                     <span className="text-sm font-semibold text-gray-900">₹{Number(trip?.distanceKm || 0) * 20}</span>
-                                    <button
-                                    onClick={() => handleDelete(trip.id)}
-                                    className="p-2 rounded-full hover:bg-red-50 text-red-600"
-                                    aria-label="Delete trip"
-                                    title="Delete trip"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
                                 </div>
-                             </div>
+                            </div>
 
                             <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
                                 <div className="flex items-center gap-1">

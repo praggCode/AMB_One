@@ -4,6 +4,13 @@ import React, { useEffect, useState } from "react";
 import UserNav from "@/components/UserNav";
 import { useRouter } from "next/navigation";
 import {MapPin,User,Clock,CheckCircle2,XCircle} from "lucide-react";
+import dynamic from 'next/dynamic'
+import api from '../../../../lib/api';
+
+const MapComponent = dynamic(() => import('@/components/MapComponent'), {
+    ssr: false,
+    loading: () => <div className="h-full w-full bg-gray-100 animate-pulse rounded-xl flex items-center justify-center text-gray-400">Loading Map...</div>
+});
 
 export default function TripDetailsNewRequest({ params }) {
     const router = useRouter();
@@ -16,30 +23,36 @@ export default function TripDetailsNewRequest({ params }) {
     ];
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
-        const stored = localStorage.getItem("currentBooking");
-        if (stored) {
-            const data = JSON.parse(stored);
-            if (data?.id === id) setTrip(data);
-        }
+        const fetchTrip = async () => {
+            if (!id) return;
+            try {
+                const { data } = await api.get(`/bookings/${id}`);
+                setTrip(data);
+            } catch (error) {
+                console.error("Failed to fetch trip details:", error);
+            }
+        };
+        fetchTrip();
     }, [id]);
 
-    const handleAccept = () => {
+    const handleAccept = async () => {
         if (typeof window === "undefined" || !trip) return;
-        const accepted = { ...trip, status: "Accepted" };
-        localStorage.setItem("driverCurrentTrip", JSON.stringify(accepted));
-        localStorage.setItem("currentBooking", JSON.stringify(accepted));
-        router.push(`/DriverPages/trip/${trip.id}`);
+        try {
+            await api.put(`/bookings/${trip._id}/status`, { status: 'accepted' });
+            router.push(`/DriverPages/trip/${trip._id}`);
+        } catch (error) {
+            console.error("Failed to accept trip", error);
+        }
     };
 
-    const handleDecline = () => {
+    const handleDecline = async () => {
         if (typeof window === "undefined" || !trip) return;
-        const historyRaw = localStorage.getItem("driverHistory");
-        const history = historyRaw ? JSON.parse(historyRaw) : [];
-        const record = { ...trip, status: "Declined" };
-        localStorage.setItem("driverHistory", JSON.stringify([record, ...history]));
-        localStorage.removeItem("currentBooking");
-        router.push(`/DriverPages`);
+        try {
+            await api.put(`/bookings/${trip._id}/status`, { status: 'cancelled' });
+            router.push(`/DriverPages`);
+        } catch (error) {
+            console.error("Failed to decline trip", error);
+        }
     };
 
     return (
@@ -50,19 +63,19 @@ export default function TripDetailsNewRequest({ params }) {
                 <div className="flex items-center justify-between mb-4">
                     <div>
                         <h1 className="text-xl font-bold text-gray-900">Trip Details</h1>
-                        <p className="text-sm text-gray-500">Trip #{trip?.id}</p>
+                        <p className="text-sm text-gray-500">Trip #{trip?.bookingId}</p>
                     </div>
                     <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full uppercase tracking-wide">
                         {trip?.status || "New Request"}
                     </span>
                 </div>
-                {/* Map Placeholder */}
-                <div className="bg-gray-100 rounded-2xl h-64 mb-6 flex flex-col items-center justify-center text-gray-400 border border-gray-200">
-                    <div className="w-16 h-16 bg-[#D70040]/10 rounded-full flex items-center justify-center mb-4">
-                        <MapPin size={32} className="text-[#D70040]" />
-                    </div>
-                    <p className="font-bold text-gray-600">MAP COMING SOON</p>
-                    <p className="text-sm">Live tracking will be displayed here</p>
+                {/* Map Section */}
+                <div className="bg-gray-100 rounded-2xl h-96 mb-6 overflow-hidden border border-gray-200 shadow-sm relative z-0">
+                    <MapComponent
+                        pickup={trip?.pickupCoords}
+                        destination={trip?.destinationCoords}
+                        readOnly={true}
+                    />
                 </div>
 
                 {/* Trip Information Card */}
