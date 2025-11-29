@@ -64,8 +64,26 @@ export const DriverProvider = ({ children }) => {
         }
     };
 
+    const updateDriverStatus = async (newStatus) => {
+        if (!driver) return { success: false, message: 'No driver logged in' };
+
+        const previousStatus = driver.status;
+        setDriver({ ...driver, status: newStatus });
+
+        try {
+            const { data } = await api.patch('/driver/status', { status: newStatus });
+            setDriver(data.driver);
+            return { success: true, message: 'Status updated successfully' };
+        } catch (error) {
+            setDriver({ ...driver, status: previousStatus });
+            console.error("Status update failed", error);
+            const message = error.response?.data?.message || error.response?.data?.error || 'Failed to update status';
+            return { success: false, message };
+        }
+    };
+
     return (
-        <DriverContext.Provider value={{ driver, login, register, logout, loading }}>
+        <DriverContext.Provider value={{ driver, login, register, logout, loading, updateDriverStatus }}>
             {children}
         </DriverContext.Provider>
     );
