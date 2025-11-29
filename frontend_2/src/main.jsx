@@ -4,8 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import {BrowserRouter} from 'react-router-dom';
 import UserContext from './context/UserContext';
-
 import CaptainContext from "./context/CaptainContext.jsx";
+import { Toaster } from 'sonner';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -13,6 +13,7 @@ createRoot(document.getElementById("root")).render(
       <UserContext>
         <BrowserRouter>
           <App />
+          <Toaster position="top-center" richColors />
         </BrowserRouter>
       </UserContext>
     </CaptainContext>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Home from './pages/home.jsx'
+import Home from './pages/Home.jsx'
 import UserLogin from './pages/UserLogin.jsx';
 import UserSignup from './pages/UserSignup.jsx';
 import CaptainLogin from './pages/CaptainLogin.jsx';

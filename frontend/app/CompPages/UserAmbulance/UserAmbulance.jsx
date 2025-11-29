@@ -195,24 +195,24 @@ export default function UserAmbulance() {
                 </div>
               )}
 
-                <div className="flex gap-4 pt-2">
-                  <button
-                    type="button"
-                    className="flex-1 rounded-lg border border-gray-200 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
-                    onClick={() => router.push('/CompPages/UserDashboard')}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 rounded-lg bg-[#D70040] px-4 py-3 font-semibold text-white transition"
-                    disabled={submitting}
-                  >
-                    {submitting ? 'Booking…' : 'Confirm Booking'}
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="flex gap-4 pt-2">
+                <button
+                  type="button"
+                  className="flex-1 rounded-lg border border-gray-200 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
+                  onClick={() => router.push('/CompPages/UserDashboard')}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 rounded-lg bg-[#D70040] px-4 py-3 font-semibold text-white transition"
+                  disabled={submitting}
+                >
+                  {submitting ? 'Booking…' : 'Confirm Booking'}
+                </button>
+              </div>
+            </form>
+          </div>
         </section>
       </main>
     </div>
