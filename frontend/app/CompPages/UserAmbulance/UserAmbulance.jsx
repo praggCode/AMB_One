@@ -76,6 +76,14 @@ export default function UserAmbulance() {
       return;
     }
 
+    if (!pickupCoords || !destinationCoords) {
+      setFeedback({
+        type: 'error',
+        message: 'Please select pickup and destination from the map or suggestions to get accurate location.',
+      });
+      return;
+    }
+
     setSubmitting(true);
 
     const mockDistance = 5;

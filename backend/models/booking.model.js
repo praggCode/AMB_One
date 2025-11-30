@@ -38,12 +38,28 @@ const bookingSchema = new mongoose.Schema({
         type: String
     },
     pickupCoords: {
-        lat: Number,
-        lon: Number
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
     },
     destinationCoords: {
-        lat: Number,
-        lon: Number
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
     },
     status: {
         type: String,
@@ -60,5 +76,7 @@ const bookingSchema = new mongoose.Schema({
         type: String
     }
 }, { timestamps: true });
+
+bookingSchema.index({ pickupCoords: '2dsphere' });
 
 module.exports = mongoose.model('Booking', bookingSchema);
