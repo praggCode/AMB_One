@@ -157,8 +157,8 @@ export default function UserDashboard() {
                 {assigned && (
                   <div className="mb-8 h-80 rounded-xl overflow-hidden border border-gray-200 relative">
                     <MapComponent
-                      pickup={currentBooking.pickupCoords}
-                      destination={currentBooking.destinationCoords}
+                      pickup={currentBooking.pickupCoords ? { lat: currentBooking.pickupCoords.coordinates[1], lon: currentBooking.pickupCoords.coordinates[0] } : null}
+                      destination={currentBooking.destinationCoords ? { lat: currentBooking.destinationCoords.coordinates[1], lon: currentBooking.destinationCoords.coordinates[0] } : null}
                       vehicleLocation={vehicleLocation}
                       readOnly={true}
                     />

@@ -106,8 +106,8 @@ export default function TripDetailsAccepted({ params }) {
                 </div>
                 <div className="bg-gray-100 rounded-2xl h-96 mb-6 overflow-hidden border border-gray-200 shadow-inner relative">
                     <MapComponent
-                        pickup={trip?.pickupCoords}
-                        destination={trip?.destinationCoords}
+                        pickup={trip?.pickupCoords ? { lat: trip.pickupCoords.coordinates[1], lon: trip.pickupCoords.coordinates[0] } : null}
+                        destination={trip?.destinationCoords ? { lat: trip.destinationCoords.coordinates[1], lon: trip.destinationCoords.coordinates[0] } : null}
                         vehicleLocation={location}
                         readOnly={true}
                     />

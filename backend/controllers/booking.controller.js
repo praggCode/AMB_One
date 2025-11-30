@@ -43,7 +43,8 @@ module.exports.updateBookingStatus = async (req, res, next) => {
 
 module.exports.getPendingBookings = async (req, res, next) => {
     try {
-        const pendingBookings = await bookingService.getPendingBookings();
+        const { lat, lon } = req.query;
+        const pendingBookings = await bookingService.getPendingBookings(lat, lon);
         res.status(200).json(pendingBookings);
     } catch (err) {
         res.status(500).json({ message: err.message });

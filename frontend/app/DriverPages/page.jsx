@@ -24,7 +24,22 @@ export default function DriverDashboard() {
     useEffect(() => {
         const fetchDriverData = async () => {
             try {
-                const pendingRes = await api.get('/bookings/pending');
+                let lat, lon;
+                if (navigator.geolocation) {
+                    try {
+                        const position = await new Promise((resolve, reject) => {
+                            navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+                        });
+                        lat = position.coords.latitude;
+                        lon = position.coords.longitude;
+                    } catch (e) {
+                        console.warn("Could not get location, fetching all bookings:", e);
+                    }
+                }
+
+                const pendingRes = await api.get('/bookings/pending', {
+                    params: { lat, lon }
+                });
                 setPendingBookings(pendingRes.data || []);
 
                 const historyRes = await api.get('/bookings/driver-history');

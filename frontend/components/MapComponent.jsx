@@ -106,6 +106,7 @@ const MapComponent = ({ pickup, destination, vehicleLocation, onLocationSelect, 
 
     return (
         <MapContainer
+            key={JSON.stringify(defaultCenter)}
             center={defaultCenter}
             zoom={5}
             scrollWheelZoom={false}
