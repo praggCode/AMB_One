@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, ZoomControl } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility';
 import axios from 'axios';
+import DriftMarker from "react-leaflet-drift-marker";
 
-const MapUpdater = ({ pickup, destination }) => {
+const MapUpdater = ({ pickup, destination, vehicleLocation }) => {
     const map = useMap();
 
     useEffect(() => {
@@ -91,8 +94,15 @@ const MapClickHandler = ({ onLocationSelect }) => {
     );
 };
 
-const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove, readOnly = false }) => {
+const MapComponent = ({ pickup, destination, vehicleLocation, onLocationSelect, onLocationRemove, readOnly = false }) => {
     const defaultCenter = [20.5937, 78.9629]; // India center
+
+    const ambulanceIcon = new L.Icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/1048/1048341.png', // User selected Isometric Ambulance
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -20]
+    });
 
     return (
         <MapContainer
@@ -144,7 +154,22 @@ const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove,
                 </Marker>
             )}
 
-            <MapUpdater pickup={pickup} destination={destination} />
+            {vehicleLocation && (
+                <DriftMarker
+                    position={[vehicleLocation.lat, vehicleLocation.lon]}
+                    icon={ambulanceIcon}
+                    duration={1000} // Animation duration in ms
+                >
+                    <Popup>
+                        <div className="p-2">
+                            <p className="font-medium text-sm">Ambulance Location</p>
+                            <p className="text-xs text-gray-500">Live Tracking</p>
+                        </div>
+                    </Popup>
+                </DriftMarker>
+            )}
+
+            <MapUpdater pickup={pickup} destination={destination} vehicleLocation={vehicleLocation} />
             {!readOnly && <MapClickHandler onLocationSelect={onLocationSelect} />}
         </MapContainer>
     );
