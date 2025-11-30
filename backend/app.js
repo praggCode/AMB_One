@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user.route");
 const cookieParser = require("cookie-parser");
 const driverRoutes = require("./routes/driver.route");
 const bookingRoutes = require("./routes/booking.route");
+const { generalLimiter, authLimiter, } = require("./middlewares/rateLimit.middleware")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,8 +23,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use("/users", userRoutes);
-app.use("/driver", driverRoutes);
+app.use(generalLimiter)
+app.use("/users", authLimiter, userRoutes);
+app.use("/driver", authLimiter, driverRoutes);
 app.use("/bookings", bookingRoutes);
 
 module.exports = app;
