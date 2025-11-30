@@ -3,9 +3,11 @@ const http = require('http');
 const app = require('./app');
 const connectDB = require('./db/mongo');
 const { initializeSocket } = require('./services/socket.service');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000
+const startCronJobs = require("./jobs/cron")
 
 connectDB();
+startCronJobs();
 
 const server = http.createServer(app);
 
