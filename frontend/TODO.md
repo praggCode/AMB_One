@@ -1,29 +1,33 @@
-# Remaining Frontend Tasks
+# Frontend TODO List
 
-## 1. Booking Integration
-- [ ] Connect Booking Form to Backend API
-- [ ] Create Booking History Page for Users
-- [ ] Display Live Ride Status
+## 🚀 High Priority Features
+- [ ] **Admin Dashboard:**
+    - [ ] Create Admin Login Page.
+    - [ ] Create Dashboard Home (Stats: Total Bookings, Active Drivers).
+    - [ ] Create Driver Management Page (Approve/Ban Drivers).
+    - [ ] Create Booking History View for Admins.
+- [ ] **In-App Notifications:**
+    - [ ] Install `react-hot-toast` or `react-toastify`.
+    - [ ] Show toasts for "Driver Accepted", "Driver Arrived", "Booking Cancelled".
+- [ ] **Profile Management:**
+    - [ ] Create "Edit Profile" page for Users.
+    - [ ] Create "Edit Profile" page for Drivers (Vehicle details, License).
 
-## 2. Real-Time Tracking
-- [ ] Install `socket.io-client`
-- [ ] Implement Real-Time Map Updates (Live Ambulance Marker)
-- [ ] Handle Socket Events (Join Room, Update Location)
+## 🎨 UI/UX Improvements
+- [ ] **Booking Flow:**
+    - [ ] Add "Searching for Driver" animation.
+    - [ ] Add "Ride Completed" summary screen with Fare details.
+- [ ] **Ride History:**
+    - [ ] Improve card design for past trips.
+    - [ ] Add "Rate Driver" button (stars/review).
+- [ ] **Error Handling:**
+    - [ ] Create a global Error Boundary.
+    - [ ] Show friendly error messages instead of alerts (e.g., "Login Failed").
 
-## 3. Payment Integration
-- [ ] Create Payment Page/Modal
-- [ ] Integrate Stripe/Razorpay Checkout
+## 📱 Mobile Responsiveness
+- [ ] **Navigation:** Ensure Sidebar/Navbar works on small screens.
+- [ ] **Map:** Ensure Map is usable on mobile (touch gestures).
 
-## 4. Admin Dashboard
-- [ ] Create Admin Login Page
-- [ ] Create Dashboard to View All Users, Drivers, and Bookings
-- [ ] Add Controls to Manage System Data
-
-## 5. Driver Dashboard Features
-- [ ] Add "Ride Requests" Section (Accept/Reject Buttons)
-- [ ] Create Earnings/Wallet Page
-- [ ] Add Toggle for Online/Offline Status
-
-## 6. Rating System
-- [ ] Create Rating Modal/Page after Ride Completion
-- [ ] Display Driver Ratings on Profile
+## 🧹 Code Quality
+- [ ] **Type Safety:** Consider migrating to TypeScript.
+- [ ] **Components:** Refactor reusable UI elements (Buttons, Inputs) into `components/ui`.

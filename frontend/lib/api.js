@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:4000', // Backend runs on port 4000
-    withCredentials: true, // Important for cookies
+    baseURL: 'http://localhost:4000',
+    withCredentials: true,
     headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
@@ -15,7 +15,6 @@ api.interceptors.request.use((config) => {
         const url = config.url || '';
         let token = null;
 
-        // Determine which token to use based on the URL
         if (url.includes('/driver') ||
             url.includes('/bookings/pending') ||
             url.includes('/bookings/driver-history') ||
