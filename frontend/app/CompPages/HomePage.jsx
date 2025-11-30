@@ -110,7 +110,7 @@ const HomePage = () => {
         </div>
         <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#FF0000] bg-[#FF0000]/10 px-6 py-3 text-sm font-semibold shadow-sm">
           <Phone className="h-4 w-4 text-[#FF0000]" />
-          <span className="text-black">For immediate emergency: Call</span> <span className="font-bold text-[#FF0000]">911</span>
+          <span className="text-black">For immediate emergency: Call</span> <span className="font-bold text-[#FF0000]">102</span>
         </div>
       </section>
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import UserNav from "@/components/UserNav";
-import {MapPin,Clock,User,ChevronRight,LayoutDashboard,History,CheckCircle2,AlertCircle} from "lucide-react";
+import { Clock, User, ChevronRight, LayoutDashboard } from "lucide-react";
 import { useDriver } from "../../context/DriverContext"
 import { useRouter } from "next/navigation"
 import api from '../../lib/api';
@@ -60,28 +60,28 @@ export default function DriverDashboard() {
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
             <UserNav active="Dashboard" tabs={driverTabs} />
-            <div className="p-6">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Driver Dashboard</h1>
-                    <p className="text-gray-500 mt-1">Welcome back, {driver?.fullname?.firstName} {driver?.fullname?.lastName}</p>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="mb-10">
+                    <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Driver Dashboard</h1>
+                    <p className="text-gray-600 text-lg mt-2">Welcome back, {driver?.fullname?.firstName} {driver?.fullname?.lastName}</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <p className="text-sm font-medium text-gray-500 mb-2">Total Trips Today</p>
-                        <p className="text-4xl font-bold text-gray-900">{stats.total}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Total Trips Today</p>
+                        <p className="text-5xl font-bold text-gray-900">{stats.total}</p>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <p className="text-sm font-medium text-gray-500 mb-2">Pending Requests</p>
-                        <p className="text-4xl font-bold text-amber-500">{stats.pending}</p>
+                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Pending Requests</p>
+                        <p className="text-5xl font-bold text-amber-500">{stats.pending}</p>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <p className="text-sm font-medium text-gray-500 mb-2">Completed</p>
-                        <p className="text-4xl font-bold text-emerald-500">{stats.completed}</p>
+                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Completed</p>
+                        <p className="text-5xl font-bold text-emerald-500">{stats.completed}</p>
                     </div>
                 </div>
 
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Assigned Trips</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Assigned Trips</h2>
 
                 <div className="space-y-6">
                     {driverTrip && (
@@ -105,7 +105,7 @@ export default function DriverDashboard() {
                                         <div className="mt-1 w-2 h-2 rounded-full bg-[#D70040] ring-4 ring-[#FFD6E0]" />
                                         <div>
                                             <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Pickup</p>
-                                            <p className="text-gray-900 font-medium">{driverTrip.pickupLocation}</p>
+                                            <p className="text-gray-900 font-medium">{driverTrip.pickup}</p>
                                         </div>
                                     </div>
 
@@ -173,7 +173,7 @@ export default function DriverDashboard() {
                                                 <div className="mt-1 w-2 h-2 rounded-full bg-[#D70040] ring-4 ring-[#FFD6E0]" />
                                                 <div>
                                                     <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Pickup</p>
-                                                    <p className="text-gray-900 font-medium">{booking.pickupLocation}</p>
+                                                    <p className="text-gray-900 font-medium">{booking.pickup}</p>
                                                 </div>
                                             </div>
 

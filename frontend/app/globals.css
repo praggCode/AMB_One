@@ -120,3 +120,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Leaflet map controls - ensure they don't overlap navbar */
+.leaflet-control-zoom {
+  z-index: 500 !important;
+}
+
+.leaflet-top {
+  top: 80px !important;
+}

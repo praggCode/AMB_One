@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
@@ -99,8 +99,10 @@ const MapComponent = ({ pickup, destination, onLocationSelect, onLocationRemove,
             center={defaultCenter}
             zoom={5}
             scrollWheelZoom={false}
+            zoomControl={false}
             style={{ height: '100%', width: '100%', borderRadius: '1rem' }}
         >
+            <ZoomControl position="bottomleft" />
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

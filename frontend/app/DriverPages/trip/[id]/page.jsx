@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import UserNav from "@/components/UserNav";
 import { useRouter } from "next/navigation";
-import {MapPin,User,Clock,Phone,Navigation,CheckCircle2} from "lucide-react";
+import { MapPin, User, Clock, Phone, Navigation, CheckCircle2 } from "lucide-react";
 import api from '../../../../lib/api';
 
 export default function TripDetailsAccepted({ params }) {
@@ -72,7 +72,7 @@ export default function TripDetailsAccepted({ params }) {
                                     <MapPin size={14} className="text-[#D70040]" />
                                     Pickup Location
                                 </div>
-                                <p className="text-gray-900 font-medium text-lg">{trip?.pickupLocation}</p>
+                                <p className="text-gray-900 font-medium text-lg">{trip?.pickup}</p>
                             </div>
 
                             <div>
