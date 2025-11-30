@@ -4,12 +4,22 @@ import UserNav from "@/components/UserNav";
 import { useRouter } from "next/navigation";
 import { MapPin, User, Clock, Phone, Navigation, CheckCircle2 } from "lucide-react";
 import api from '../../../../lib/api';
+import { io } from 'socket.io-client';
+import dynamic from 'next/dynamic';
+
+const MapComponent = dynamic(() => import('@/components/MapComponent'), {
+    ssr: false,
+    loading: () => <div className="h-full w-full bg-gray-100 animate-pulse rounded-xl" />
+});
 
 export default function TripDetailsAccepted({ params }) {
     const router = useRouter();
     const [trip, setTrip] = useState(null);
     const resolvedParams = React.use(params);
     const id = resolvedParams?.id;
+    const [location, setLocation] = useState(null);
+    const [socket, setSocket] = useState(null);
+
     const driverTabs = [
         { label: "Dashboard", href: "/DriverPages" },
         { label: "History", href: "/DriverPages/history" },
@@ -26,6 +36,50 @@ export default function TripDetailsAccepted({ params }) {
             }
         };
         fetchTrip();
+    }, [id]);
+    useEffect(() => {
+        if (!id) return;
+        const newSocket = io('http://localhost:4000')
+        setSocket(newSocket);
+        newSocket.emit('join', { userId: id })
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const initialLocation = { lat: latitude, lon: longitude };
+                    setLocation(initialLocation);
+                    newSocket.emit('update-location', {
+                        rideId: id,
+                        location: initialLocation
+                    });
+                },
+                (error) => console.error("Error getting initial location:", error),
+                { enableHighAccuracy: true }
+            );
+        }
+
+        // Watch Location
+        let watchId;
+        if (navigator.geolocation) {
+            watchId = navigator.geolocation.watchPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const newLocation = { lat: latitude, lon: longitude };
+                    setLocation(newLocation);
+                    newSocket.emit('update-location', {
+                        rideId: id,
+                        location: newLocation
+                    });
+                },
+                (error) => console.error("Error getting location:", error),
+                { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+            );
+        }
+
+        return () => {
+            if (newSocket) newSocket.disconnect();
+            if (watchId) navigator.geolocation.clearWatch(watchId);
+        };
     }, [id]);
 
     const handleComplete = async () => {
@@ -50,16 +104,22 @@ export default function TripDetailsAccepted({ params }) {
                     </div>
                     <span className="px-3 py-1 bg-[#D70040] text-white text-xs font-bold rounded-full uppercase tracking-wide">Accepted</span>
                 </div>
-                {/* Map Placeholder */}
-                <div className="bg-gray-100 rounded-2xl h-64 mb-6 flex flex-col items-center justify-center text-gray-400 border border-gray-200">
-                    <div className="w-16 h-16 bg-[#D70040]/10 rounded-full flex items-center justify-center mb-4">
-                        <MapPin size={32} className="text-[#D70040]" />
-                    </div>
-                    <p className="font-bold text-gray-600">MAP COMING SOON</p>
-                    <p className="text-sm">Live tracking will be displayed here</p>
+                <div className="bg-gray-100 rounded-2xl h-96 mb-6 overflow-hidden border border-gray-200 shadow-inner relative">
+                    <MapComponent
+                        pickup={trip?.pickupCoords}
+                        destination={trip?.destinationCoords}
+                        vehicleLocation={location}
+                        readOnly={true}
+                    />
+                    {!location && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-[400]">
+                            <div className="bg-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+                                <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping" />
+                                <span className="text-xs font-bold text-gray-600">Locating GPS...</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
-
-                {/* Trip Information Card */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-6 border-b border-gray-50">
                         <h2 className="text-lg font-bold text-gray-900">Trip Information</h2>
@@ -116,7 +176,6 @@ export default function TripDetailsAccepted({ params }) {
                         </div>
                     </div>
 
-                    {/* Actions */}
                     <div className="p-6 bg-gray-50/50 border-t border-gray-100 flex flex-col gap-3">
                         <button className="w-full bg-white border border-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 shadow-sm">
                             <Phone size={18} />

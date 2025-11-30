@@ -6,6 +6,13 @@ import { useRouter } from 'next/navigation';
 import UserNav from '@/components/UserNav';
 import api from '../../../lib/api';
 import { useUser } from '@/context/UserContext';
+import { io } from 'socket.io-client';
+import dynamic from 'next/dynamic';
+
+const MapComponent = dynamic(() => import('@/components/MapComponent'), {
+  ssr: false,
+  loading: () => <div className="h-full w-full bg-gray-100 animate-pulse rounded-xl" />
+});
 
 const formatDate = (timestamp) => {
   try {
@@ -22,6 +29,8 @@ export default function UserDashboard() {
   const router = useRouter();
   const { user, loading } = useUser();
   const [currentBooking, setCurrentBooking] = useState(null);
+  const [vehicleLocation, setVehicleLocation] = useState(null);
+  const [socket, setSocket] = useState(null);
   const assigned = currentBooking?.status === 'Accepted' || currentBooking?.status === 'accepted';
 
   useEffect(() => {
@@ -50,6 +59,27 @@ export default function UserDashboard() {
     }
   }, [user]);
 
+  // Socket Connection for Live Tracking
+  useEffect(() => {
+    if (!currentBooking || !assigned) return;
+
+    const newSocket = io('http://localhost:4000');
+    setSocket(newSocket);
+
+    newSocket.emit('join', { userId: currentBooking._id });
+
+    newSocket.on('receive-location', (data) => {
+      console.log("Received location update:", data);
+      if (data.location) {
+        setVehicleLocation(data.location);
+      }
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [currentBooking, assigned]);
+
   if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   if (!user) return null;
 
@@ -58,6 +88,7 @@ export default function UserDashboard() {
       localStorage.removeItem('currentBooking');
     }
     setCurrentBooking(null);
+    setVehicleLocation(null);
   };
 
   return (
@@ -121,6 +152,26 @@ export default function UserDashboard() {
                     {currentBooking.status || 'Pending'}
                   </span>
                 </div>
+
+                {/* Live Map Section */}
+                {assigned && (
+                  <div className="mb-8 h-80 rounded-xl overflow-hidden border border-gray-200 relative">
+                    <MapComponent
+                      pickup={currentBooking.pickupCoords}
+                      destination={currentBooking.destinationCoords}
+                      vehicleLocation={vehicleLocation}
+                      readOnly={true}
+                    />
+                    {!vehicleLocation && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/5 backdrop-blur-[1px] z-[400] pointer-events-none">
+                        <div className="bg-white/90 px-4 py-2 rounded-full shadow-sm flex items-center gap-2">
+                          <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                          <span className="text-xs font-bold text-gray-600">Waiting for driver signal...</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Booking Details */}
                 <div className="space-y-6 mb-8">
