@@ -10,6 +10,9 @@ const driverRoutes = require("./routes/driver.route");
 const bookingRoutes = require("./routes/booking.route");
 const { generalLimiter, authLimiter, } = require("./middlewares/rateLimit.middleware")
 
+const helmet = require("helmet");
+
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

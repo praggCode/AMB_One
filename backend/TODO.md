@@ -1,20 +1,12 @@
-# Remaining Tasks
+# Backend TODO List
 
-## 1. Payment Gateway Integration
-- [ ] Integrate Stripe/Razorpay in Backend
-- [ ] Add Payment Flow in Frontend
+## 🚀 To Implement
+- [ ] **Admin API:** Create endpoints for admin login, driver approval, and system stats.
+- [ ] **SMS Notifications:** Integrate Twilio for instant SMS updates.
 
-## 2. Admin Dashboard
-- [ ] Create Admin Backend Routes
-- [ ] Create Admin Frontend Dashboard
-
-## 3. Driver Dashboard Enhancements
-- [ ] Add Accept/Reject Ride Logic
-- [ ] Add Earnings View
-
-## 4. Notifications
-- [ ] Setup Email/SMS Service
-
-## 5. Rating System
-- [ ] Add Rating Backend
-- [ ] Add Rating Frontend
+## ✅ Completed
+- [x] **Input Validation:** Added `express-validator` to all routes.
+- [x] **Helmet:** Added `helmet` middleware for security.
+- [x] **Rate Limiting:** Added `express-rate-limit`.
+- [x] **Auto-Cancel:** Added cron job for expired bookings.
+- [x] **Geospatial Queries:** Added location-based filtering.
