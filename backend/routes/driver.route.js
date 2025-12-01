@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {body} = require('express-validator')
+const { body } = require('express-validator')
 const DriverController = require('../controllers/driver.controller')
 const authMiddleware = require('../middlewares/auth.middleware');
 const { authLimiter } = require('../middlewares/rateLimit.middleware');
@@ -22,6 +22,9 @@ router.post('/login', authLimiter,
 
 router.get('/profile', authMiddleware.authDriver, DriverController.getDriverProfile)
 
+
 router.post('/logout', authMiddleware.authDriver, DriverController.logoutDriver)
+
+router.put('/status', authMiddleware.authDriver, DriverController.updateDriverStatus)
 
 module.exports = router

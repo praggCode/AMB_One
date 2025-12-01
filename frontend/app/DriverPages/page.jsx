@@ -6,14 +6,27 @@ import { Clock, User, ChevronRight, LayoutDashboard } from "lucide-react";
 import { useDriver } from "../../context/DriverContext"
 import { useRouter } from "next/navigation"
 import api from '../../lib/api';
+import { Switch } from "@/components/ui/switch";
 
 export default function DriverDashboard() {
-    const { driver, loading } = useDriver();
+    const { driver, loading, updateStatus } = useDriver();
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("dashboard");
     const [pendingBookings, setPendingBookings] = useState([]);
     const [driverTrip, setDriverTrip] = useState(null);
     const [history, setHistory] = useState([]);
+    const handleStatusToggle = async (checked) => {
+        try {
+            const newStatus = checked ? 'active' : 'inactive';
+            const result = await updateStatus(newStatus);
+            if (!result.success) {
+                alert(result.message || "Failed to update status. Please try again.");
+            }
+        } catch (error) {
+            console.error("Failed to update status:", error);
+            alert("Failed to update status. Please try again.");
+        }
+    };
 
     useEffect(() => {
         if (!loading && !driver) {
@@ -79,6 +92,33 @@ export default function DriverDashboard() {
                 <div className="mb-10">
                     <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Driver Dashboard</h1>
                     <p className="text-gray-600 text-lg mt-2">Welcome back, {driver?.fullname?.firstName} {driver?.fullname?.lastName}</p>
+                </div>
+
+                {/* Status Toggle Card */}
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-8">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className={`w-3 h-3 rounded-full ${driver?.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900">Availability Status</h3>
+                                <p className="text-sm text-gray-600">
+                                    You are currently <span className={`font-semibold ${driver?.status === 'active' ? 'text-green-600' : 'text-gray-600'}`}>
+                                        {driver?.status === 'active' ? 'Active' : 'Inactive'}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <span className="text-sm font-medium text-gray-700">
+                                {driver?.status === 'active' ? 'Go Offline' : 'Go Online'}
+                            </span>
+                            <Switch
+                                checked={driver?.status === 'active'}
+                                onCheckedChange={handleStatusToggle}
+                                className="data-[state=checked]:bg-green-500"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">

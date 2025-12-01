@@ -66,7 +66,33 @@ module.exports.getDriverProfile = async (req, res, next) => {
     res.status(200).json(req.driver)
 }
 
+
 module.exports.logoutDriver = async (req, res, next) => {
     res.clearCookie('token');
     return res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports.updateDriverStatus = async (req, res, next) => {
+    try {
+        const { status } = req.body;
+
+        if (!status || !['active', 'inactive'].includes(status)) {
+            return res.status(400).json({ error: "Invalid status. Must be 'active' or 'inactive'" });
+        }
+
+        const driver = await driverModel.findByIdAndUpdate(
+            req.driver._id,
+            { status },
+            { new: true }
+        );
+
+        if (!driver) {
+            return res.status(404).json({ error: "Driver not found" });
+        }
+
+        res.status(200).json({ driver, message: `Status updated to ${status}` });
+    } catch (error) {
+        console.error("Update status error:", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
 };
