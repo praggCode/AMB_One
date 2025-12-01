@@ -27,8 +27,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(generalLimiter)
-app.use("/users", authLimiter, userRoutes);
-app.use("/driver", authLimiter, driverRoutes);
+app.use("/users", userRoutes);
+app.use("/driver", driverRoutes);
 app.use("/bookings", bookingRoutes);
 
 module.exports = app;
