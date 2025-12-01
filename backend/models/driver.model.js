@@ -10,8 +10,7 @@ const driverSchema = new mongoose.Schema({
       minlength: [3, "FirstName must be at least 3 characters long"],
     },
     lastName: {
-      type: String,
-      minlength: [3, "LastName must be at least 3 characters long"],
+      type: String
     },
   },
   email: {
@@ -27,6 +26,16 @@ const driverSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{10,15}$/.test(v);
+      },
+      message: props => `${props.value} is not a valid phone number! Phone number must be 10-15 digits.`
+    }
   },
   socketId: {
     type: String,

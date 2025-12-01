@@ -122,11 +122,11 @@ export default function UserNav({ active = '', tabs = defaultTabs }) {
                           </p>
                         </div>
                       )}
-                      {profile.phone && (
+                      {(profile.phone || profile.phoneNumber) && (
                         <div className="flex items-center gap-2">
                           <Phone className="h-4 w-4 text-gray-500" />
                           <p className="text-xs text-gray-600">
-                            {profile.phone}
+                            {profile.phone || profile.phoneNumber}
                           </p>
                         </div>
                       )}
