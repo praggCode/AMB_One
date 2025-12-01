@@ -31,10 +31,11 @@ export const UserProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const { data } = await api.post('/users/login', { email, password });
-            setUser(data.user);
             if (data.token) {
                 localStorage.setItem('userToken', data.token);
             }
+            // Refetch user profile to ensure all data is loaded
+            await checkUserLoggedIn();
             router.push('/dashboard');
             return { success: true };
         } catch (error) {
@@ -49,10 +50,11 @@ export const UserProvider = ({ children }) => {
     const register = async (userData) => {
         try {
             const { data } = await api.post('/users/register', userData);
-            setUser(data.user);
             if (data.token) {
                 localStorage.setItem('userToken', data.token);
             }
+            // Refetch user profile to ensure all data is loaded
+            await checkUserLoggedIn();
             router.push('/dashboard');
             return { success: true };
         } catch (error) {

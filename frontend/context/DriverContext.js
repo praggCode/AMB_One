@@ -31,10 +31,11 @@ export const DriverProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const { data } = await api.post('/driver/login', { email, password });
-            setDriver(data.driver);
             if (data.token) {
                 localStorage.setItem('driverToken', data.token);
             }
+            // Refetch driver profile to ensure all data is loaded
+            await checkDriverLoggedIn();
             router.push('/DriverPages'); // Adjust route
             return { success: true };
         } catch (error) {
@@ -49,10 +50,11 @@ export const DriverProvider = ({ children }) => {
     const register = async (driverData) => {
         try {
             const { data } = await api.post('/driver/register', driverData);
-            setDriver(data.driver);
             if (data.token) {
                 localStorage.setItem('driverToken', data.token);
             }
+            // Refetch driver profile to ensure all data is loaded
+            await checkDriverLoggedIn();
             router.push('/DriverPages');
             return { success: true };
         } catch (error) {

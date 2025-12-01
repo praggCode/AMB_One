@@ -53,7 +53,14 @@ export default function TripDetailsAccepted({ params }) {
                         location: initialLocation
                     });
                 },
-                (error) => console.error("Error getting initial location:", error),
+                (error) => {
+                    const errorMessages = {
+                        1: 'Location permission denied. Please enable location access.',
+                        2: 'Location position unavailable.',
+                        3: 'Location request timeout.'
+                    };
+                    console.error("Error getting initial location:", errorMessages[error.code] || error.message || 'Unknown error');
+                },
                 { enableHighAccuracy: true }
             );
         }
@@ -71,7 +78,14 @@ export default function TripDetailsAccepted({ params }) {
                         location: newLocation
                     });
                 },
-                (error) => console.error("Error getting location:", error),
+                (error) => {
+                    const errorMessages = {
+                        1: 'Location permission denied. Please enable location access.',
+                        2: 'Location position unavailable.',
+                        3: 'Location request timeout.'
+                    };
+                    console.error("Error watching location:", errorMessages[error.code] || error.message || 'Unknown error');
+                },
                 { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
             );
         }
@@ -106,8 +120,8 @@ export default function TripDetailsAccepted({ params }) {
                 </div>
                 <div className="bg-gray-100 rounded-2xl h-96 mb-6 overflow-hidden border border-gray-200 shadow-inner relative">
                     <MapComponent
-                        pickup={trip?.pickupCoords ? { lat: trip.pickupCoords.coordinates[1], lon: trip.pickupCoords.coordinates[0] } : null}
-                        destination={trip?.destinationCoords ? { lat: trip.destinationCoords.coordinates[1], lon: trip.destinationCoords.coordinates[0] } : null}
+                        pickup={trip?.pickupCoords?.coordinates?.length === 2 ? { lat: trip.pickupCoords.coordinates[1], lon: trip.pickupCoords.coordinates[0] } : null}
+                        destination={trip?.destinationCoords?.coordinates?.length === 2 ? { lat: trip.destinationCoords.coordinates[1], lon: trip.destinationCoords.coordinates[0] } : null}
                         vehicleLocation={location}
                         readOnly={true}
                     />
