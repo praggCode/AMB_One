@@ -8,7 +8,7 @@ const userRoutes = require("./routes/user.route");
 const cookieParser = require("cookie-parser");
 const driverRoutes = require("./routes/driver.route");
 const bookingRoutes = require("./routes/booking.route");
-const { generalLimiter, authLimiter, } = require("./middlewares/rateLimit.middleware")
+
 
 const helmet = require("helmet");
 
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use(generalLimiter)
+
 app.use("/users", userRoutes);
 app.use("/driver", driverRoutes);
 app.use("/bookings", bookingRoutes);
