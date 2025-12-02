@@ -30,7 +30,7 @@ export default function DriverHistory() {
 
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
-            <UserNav active="History" tabs={driverTabs} />
+            <UserNav active="History" tabs={driverTabs} role="driver" />
 
             <main className="p-6 max-w-3xl mx-auto">
                 <div className="mb-4">
