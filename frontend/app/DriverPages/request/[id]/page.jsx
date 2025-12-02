@@ -57,7 +57,7 @@ export default function TripDetailsNewRequest({ params }) {
 
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
-            <UserNav active="Dashboard" tabs={driverTabs} />
+            <UserNav active="Dashboard" tabs={driverTabs} role="driver" />
 
             <main className="p-6 max-w-3xl mx-auto">
                 <div className="flex items-center justify-between mb-4">

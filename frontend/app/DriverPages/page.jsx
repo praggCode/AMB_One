@@ -87,7 +87,7 @@ export default function DriverDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
-            <UserNav active="Dashboard" tabs={driverTabs} />
+            <UserNav active="Dashboard" tabs={driverTabs} role="driver" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-10">
                     <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Driver Dashboard</h1>
