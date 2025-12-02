@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: ['https://mediride-frontend.onrender.com'],
+  origin: ['https://mediride-frontend-again.onrender.com'],
   credentials: true
 }));
 
