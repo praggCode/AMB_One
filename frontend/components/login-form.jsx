@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { useDriver } from "@/context/DriverContext";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -17,11 +18,11 @@ export function LoginForm({
   const { login: driverLogin } = useDriver();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setIsLoading(true);
 
     let result;
     if (role === 'driver') {
@@ -30,8 +31,12 @@ export function LoginForm({
       result = await userLogin(email, password);
     }
 
+    setIsLoading(false);
+
     if (!result.success) {
-      setError(result.message || "Login failed");
+      toast.error(result.message || "Login failed");
+    } else {
+      toast.success(`Welcome back!`);
     }
   };
 
@@ -72,14 +77,14 @@ export function LoginForm({
                   required
                   className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
                 />
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </Field>
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-[#D70040] hover:bg-[#B8003A] text-white font-semibold"
+                disabled={isLoading}
+                className="w-full h-12 bg-[#D70040] hover:bg-[#B8003A] text-white font-semibold disabled:opacity-50"
               >
-                Sign In
+                {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
             </FieldGroup>
 

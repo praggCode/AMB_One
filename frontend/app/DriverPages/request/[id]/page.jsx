@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { MapPin, User, Clock, CheckCircle2, XCircle } from "lucide-react";
 import dynamic from 'next/dynamic'
 import api from '../../../../lib/api';
+import { toast } from 'sonner';
 
 const MapComponent = dynamic(() => import('@/components/MapComponent'), {
     ssr: false,
@@ -39,9 +40,11 @@ export default function TripDetailsNewRequest({ params }) {
         if (typeof window === "undefined" || !trip) return;
         try {
             await api.put(`/bookings/${trip._id}/status`, { status: 'accepted' });
+            toast.success('Trip accepted successfully!');
             router.push(`/DriverPages/trip/${trip._id}`);
         } catch (error) {
             console.error("Failed to accept trip", error);
+            toast.error('Failed to accept trip. Please try again.');
         }
     };
 
@@ -49,9 +52,11 @@ export default function TripDetailsNewRequest({ params }) {
         if (typeof window === "undefined" || !trip) return;
         try {
             await api.put(`/bookings/${trip._id}/status`, { status: 'cancelled' });
+            toast.success('Trip declined');
             router.push(`/DriverPages`);
         } catch (error) {
             console.error("Failed to decline trip", error);
+            toast.error('Failed to decline trip. Please try again.');
         }
     };
 
@@ -143,7 +148,9 @@ export default function TripDetailsNewRequest({ params }) {
                         </button>
 
                         <button onClick={handleAccept} className="w-full bg-[#D70040] text-white font-bold py-3 px-4 rounded-xl hover:bg-[#B60035] transition-colors flex items-center justify-center gap-2 shadow-sm">
-                            <CheckCircle2 size={18} />
+                            <CheckCircle2 size={18}
+                                onClick={() => toast.warning("Please wait 2-3 minutes for confirming")}
+                            />
                             Accept Trip
                         </button>
                     </div>

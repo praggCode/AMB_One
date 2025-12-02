@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { useDriver } from "@/context/DriverContext";
+import { toast } from "sonner";
 
 export function SignupForm({
   className,
@@ -20,11 +21,11 @@ export function SignupForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
-    setError("");
+    setIsLoading(true);
     let result;
 
     if (role === 'driver') {
@@ -50,8 +51,12 @@ export function SignupForm({
       });
     }
 
+    setIsLoading(false);
+
     if (!result.success) {
-      setError(result.message || "Registration failed");
+      toast.error(result.message || "Registration failed");
+    } else {
+      toast.success("Account created successfully!");
     }
   };
 
@@ -121,14 +126,14 @@ export function SignupForm({
                 <FieldDescription className="text-xs text-gray-500 mt-1">
                   Must be at least 8 characters long
                 </FieldDescription>
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </Field>
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-[#D70040] hover:bg-[#B8003A] text-white font-semibold mt-2"
+                disabled={isLoading}
+                className="w-full h-12 bg-[#D70040] hover:bg-[#B8003A] text-white font-semibold mt-2 disabled:opacity-50"
               >
-                Create Account
+                {isLoading ? 'Creating Account...' : 'Create Account'}
               </Button>
             </FieldGroup>
 

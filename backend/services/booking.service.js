@@ -29,12 +29,12 @@ module.exports.createBooking = async ({ user, pickup, destination, fare, patient
         },
         bookingId
     });
-    try{
+    try {
         const userObj = await User.findById(user);
         if (userObj) {
             await emailService.sendBookingConfirmation(userObj.email, booking);
         }
-    } catch(err){
+    } catch (err) {
         console.error('Failed to send confirmation email:', err);
     }
     return booking;

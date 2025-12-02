@@ -39,7 +39,7 @@ export default function TripDetailsAccepted({ params }) {
     }, [id]);
     useEffect(() => {
         if (!id) return;
-        const newSocket = io('http://localhost:4000')
+        const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:4000')
         setSocket(newSocket);
         newSocket.emit('join', { userId: id })
         if (navigator.geolocation) {

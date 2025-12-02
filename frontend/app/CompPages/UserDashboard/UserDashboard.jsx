@@ -63,7 +63,7 @@ export default function UserDashboard() {
   useEffect(() => {
     if (!currentBooking || !assigned) return;
 
-    const newSocket = io('http://localhost:4000');
+    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:4000');
     setSocket(newSocket);
 
     newSocket.emit('join', { userId: currentBooking._id });
@@ -95,7 +95,6 @@ export default function UserDashboard() {
     <div className="min-h-screen bg-gray-50">
       <UserNav active="Dashboard" />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Dashboard Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-4xl font-bold text-gray-900">Dashboard</h2>
@@ -109,7 +108,6 @@ export default function UserDashboard() {
           </button>
         </div>
 
-        {/* Emergency Alert */}
         <div className="bg-red-50 border-l-4 border-[#D70040] rounded-xl p-5 mb-8 flex items-start gap-4">
           <AlertCircle className="w-6 h-6 text-[#D70040] flex-shrink-0 mt-0.5" />
           <div>
@@ -120,7 +118,6 @@ export default function UserDashboard() {
           </div>
         </div>
 
-        {/* Current Booking */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold text-gray-900">Current Booking</h3>
@@ -137,7 +134,6 @@ export default function UserDashboard() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             {currentBooking ? (
               <div className="p-8">
-                {/* Booking Header */}
                 <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
                   <div>
                     <h4 className="text-2xl font-bold text-gray-900 mb-2">
@@ -153,7 +149,6 @@ export default function UserDashboard() {
                   </span>
                 </div>
 
-                {/* Live Map Section */}
                 {assigned && (
                   <div className="mb-8 h-80 rounded-xl overflow-hidden border border-gray-200 relative">
                     <MapComponent
@@ -172,8 +167,6 @@ export default function UserDashboard() {
                     )}
                   </div>
                 )}
-
-                {/* Booking Details */}
                 <div className="space-y-6 mb-8">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
@@ -216,7 +209,6 @@ export default function UserDashboard() {
                   )}
                 </div>
 
-                {/* Driver Information */}
                 <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
                   <h5 className="font-bold text-gray-900 mb-4 text-lg">Driver Information</h5>
                   <div className="space-y-3">

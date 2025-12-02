@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { useUser } from '@/context/UserContext';
 import api from '../../../lib/api';
 import AddressAutocomplete from '@/components/AddressAutocomplete';
+import { toast } from 'sonner';
 
 const MapComponent = dynamic(() => import('@/components/MapComponent'), {
   ssr: false,
@@ -29,7 +30,6 @@ export default function UserAmbulance() {
   const [pickupCoords, setPickupCoords] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [feedback, setFeedback] = useState(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -69,18 +69,12 @@ export default function UserAmbulance() {
     event.preventDefault();
 
     if (!formData.pickupLocation || !formData.destination || !formData.patientName) {
-      setFeedback({
-        type: 'error',
-        message: 'Pickup, destination, and patient name are required.',
-      });
+      toast.error('Pickup, destination, and patient name are required.');
       return;
     }
 
     if (!pickupCoords || !destinationCoords) {
-      setFeedback({
-        type: 'error',
-        message: 'Please select pickup and destination from the map or suggestions to get accurate location.',
-      });
+      toast.error('Please select pickup and destination from the map or suggestions to get accurate location.');
       return;
     }
 
@@ -106,10 +100,7 @@ export default function UserAmbulance() {
         localStorage.setItem('currentBooking', JSON.stringify(data));
       }
 
-      setFeedback({
-        type: 'success',
-        message: 'Booking saved! Redirecting to dashboard…',
-      });
+      toast.success('Booking created successfully! Redirecting to dashboard…');
       setFormData(initialForm);
       setPickupCoords(null);
       setDestinationCoords(null);
@@ -120,17 +111,11 @@ export default function UserAmbulance() {
       }, 1200);
     } catch (error) {
       if (error.response?.status === 401) {
-        setFeedback({
-          type: 'error',
-          message: 'Session expired. Please login again.',
-        });
+        toast.error('Session expired. Please login again.');
         setTimeout(() => router.push('/login'), 2000);
       } else {
         console.error("Booking failed", error);
-        setFeedback({
-          type: 'error',
-          message: error.response?.data?.message || 'Failed to create booking. Please try again.',
-        });
+        toast.error(error.response?.data?.message || 'Failed to create booking. Please try again.');
       }
       setSubmitting(false);
     }
@@ -222,17 +207,6 @@ export default function UserAmbulance() {
                 </div>
               </label>
 
-              {feedback && (
-                <div
-                  className={`rounded-lg px-4 py-3 text-sm ${feedback.type === 'success'
-                    ? 'bg-green-50 text-green-700'
-                    : 'bg-red-50 text-red-700'
-                    }`}
-                >
-                  {feedback.message}
-                </div>
-              )}
-
               <div className="flex gap-4 pt-2">
                 <button
                   type="button"
@@ -245,6 +219,7 @@ export default function UserAmbulance() {
                   type="submit"
                   className="flex-1 rounded-lg bg-[#D70040] px-4 py-3 font-semibold text-white transition"
                   disabled={submitting}
+                  onClick={() => toast.warning("Please wait 2-3 minutes to confirm your ride booking")}
                 >
                   {submitting ? 'Booking…' : 'Confirm Booking'}
                 </button>
