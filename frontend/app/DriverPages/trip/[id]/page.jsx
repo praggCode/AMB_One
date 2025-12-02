@@ -18,6 +18,7 @@ export default function TripDetailsAccepted({ params }) {
     const resolvedParams = React.use(params);
     const id = resolvedParams?.id;
     const [location, setLocation] = useState(null);
+    const [locationError, setLocationError] = useState(null);
     const [socket, setSocket] = useState(null);
 
     const driverTabs = [
@@ -37,32 +38,41 @@ export default function TripDetailsAccepted({ params }) {
         };
         fetchTrip();
     }, [id]);
+
     useEffect(() => {
         if (!id) return;
         const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:4000')
         setSocket(newSocket);
         newSocket.emit('join', { userId: id })
+
+        const handleLocationError = (error) => {
+            const errorMessages = {
+                1: 'Location permission denied. Please enable location access.',
+                2: 'Location position unavailable.',
+                3: 'Location request timeout.'
+            };
+            const msg = errorMessages[error.code] || error.message || 'Unknown error';
+            console.warn("Location error:", msg);
+            setLocationError(msg);
+        };
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
                     const initialLocation = { lat: latitude, lon: longitude };
                     setLocation(initialLocation);
+                    setLocationError(null);
                     newSocket.emit('update-location', {
                         rideId: id,
                         location: initialLocation
                     });
                 },
-                (error) => {
-                    const errorMessages = {
-                        1: 'Location permission denied. Please enable location access.',
-                        2: 'Location position unavailable.',
-                        3: 'Location request timeout.'
-                    };
-                    console.error("Error getting initial location:", errorMessages[error.code] || error.message || 'Unknown error');
-                },
+                handleLocationError,
                 { enableHighAccuracy: true }
             );
+        } else {
+            setLocationError("Geolocation is not supported by this browser.");
         }
 
         // Watch Location
@@ -73,19 +83,13 @@ export default function TripDetailsAccepted({ params }) {
                     const { latitude, longitude } = position.coords;
                     const newLocation = { lat: latitude, lon: longitude };
                     setLocation(newLocation);
+                    setLocationError(null);
                     newSocket.emit('update-location', {
                         rideId: id,
                         location: newLocation
                     });
                 },
-                (error) => {
-                    const errorMessages = {
-                        1: 'Location permission denied. Please enable location access.',
-                        2: 'Location position unavailable.',
-                        3: 'Location request timeout.'
-                    };
-                    console.error("Error watching location:", errorMessages[error.code] || error.message || 'Unknown error');
-                },
+                handleLocationError,
                 { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
             );
         }
@@ -127,10 +131,28 @@ export default function TripDetailsAccepted({ params }) {
                     />
                     {!location && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm z-[400]">
-                            <div className="bg-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
-                                <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping" />
-                                <span className="text-xs font-bold text-gray-600">Locating GPS...</span>
-                            </div>
+                            {locationError ? (
+                                <div className="bg-white px-6 py-4 rounded-xl shadow-lg flex flex-col items-center gap-3 max-w-sm text-center">
+                                    <div className="w-10 h-10 bg-red-100 text-red-500 rounded-full flex items-center justify-center">
+                                        <MapPin size={20} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-gray-900">Location Error</h3>
+                                        <p className="text-sm text-gray-600 mt-1">{locationError}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => window.location.reload()}
+                                        className="mt-2 text-sm font-semibold text-[#D70040] hover:text-[#B60035]"
+                                    >
+                                        Retry
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="bg-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping" />
+                                    <span className="text-xs font-bold text-gray-600">Locating GPS...</span>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
