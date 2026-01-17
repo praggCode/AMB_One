@@ -8,7 +8,7 @@ const userRoutes = require("./routes/user.route");
 const cookieParser = require("cookie-parser");
 const driverRoutes = require("./routes/driver.route");
 const bookingRoutes = require("./routes/booking.route");
-const { generalLimiter, authLimiter, } = require("./middlewares/rateLimit.middleware")
+
 
 const helmet = require("helmet");
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: ['http://localhost:3001', 'http://localhost:5173', 'http://localhost:3000'],
+  origin: ['https://mediride-frontend-again.onrender.com'],
   credentials: true
 }));
 
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use(generalLimiter)
+
 app.use("/users", userRoutes);
 app.use("/driver", driverRoutes);
 app.use("/bookings", bookingRoutes);

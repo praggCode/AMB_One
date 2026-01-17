@@ -1,63 +1,63 @@
 # Ambulance Booking System
 
-The **Ambulance Booking System** is a **Next.js-based web application** designed to streamline ambulance booking and emergency response coordination.  
-It allows patients and drivers to interact in real-time through a **secure, intuitive, and responsive platform**, ensuring faster medical assistance during emergencies.  
+The **Ambulance Booking System** is a comprehensive web application designed to streamline ambulance booking and emergency response coordination. It features a dual-frontend architecture to cater to different user needs and a robust backend for real-time operations.
 
-The frontend connects seamlessly with the backend via **REST APIs and Socket.io**, providing **real-time driver tracking, instant booking updates, and live trip status monitoring**.
+It allows patients and drivers to interact in real-time through a **secure, intuitive, and responsive platform**, ensuring faster medical assistance during emergencies.
 
+The system connects seamlessly with the backend via **REST APIs and Socket.io**, providing **real-time driver tracking, instant booking updates, and live trip status monitoring**.
 
 [👉 Know More](https://docs.google.com/document/d/1PusiJMiwpYbAUpjTGTYunxlPW24cd9GQwjgiNjclx7k/edit?tab=t.0#heading=h.namad6nbwei0)
+
 ---
 
 ## 💻 Overview
 
-- 🧭 **Two Interfaces:** Client Panel & Driver Panel  
-- 🚑 **Clients:** Book ambulances, track drivers, and view booking history  
-- 👨‍✈️ **Drivers:** Log in, view assigned trips, and update trip statuses  
-- ⚡ **Real-time tracking & communication:** Powered by Socket.io & Google Maps API  
-- 💬 **Responsive design:** Optimized for both web and mobile users  
+- 🧭 **Unified Interface:**
+  - **Ambulance Booking App:** A comprehensive Next.js application for both Users and Drivers.
+- 🚑 **Clients:** Book ambulances, track drivers, and view booking history.
+- 👨‍✈️ **Drivers:** Log in, view assigned trips, and update trip statuses.
+- ⚡ **Real-time tracking & communication:** Powered by Socket.io & Google Maps API.
+- 💬 **Responsive design:** Optimized for both web and mobile users.
 
 ---
 
 ## ⚙️ Key Features
 
 ### 🔐 Authentication System
-**Client Authentication (OTP-based)**
-- Login using mobile number  
-- OTP via Firebase Authentication  
-- JWT issued upon verification  
+**Client Authentication**
+- Secure login and registration.
+- JWT-based session management.
 
-**Driver Authentication (Email + Password)**
-- Secure login with hashed passwords (**bcrypt**)  
-- JWT-based authentication & route protection  
+**Driver Authentication**
+- Secure login with hashed passwords (**bcrypt**).
+- JWT-based authentication & route protection.
 
 ---
 
 ### 🚗 Booking Management
-- Clients can book ambulances with pickup & destination details  
-- System finds the **nearest available driver**  
-- Real-time trip updates: *Requested → Accepted → In Progress → Completed → Cancelled*  
-- Booking history stored for both clients and drivers  
+- Clients can book ambulances with pickup & destination details.
+- System finds the **nearest available driver**.
+- Real-time trip updates: *Requested → Accepted → In Progress → Completed → Cancelled*.
+- Booking history stored for both clients and drivers.
 
 ---
 
 ### 💬 Real-time Communication
-- Powered by **Socket.io**  
-- Real-time updates for:  
-  - Trip status changes  
-  - Driver location updates  
-  - Notifications for acceptance, arrival, or cancellations  
+- Powered by **Socket.io**.
+- Real-time updates for:
+  - Trip status changes.
+  - Driver location updates.
+  - Notifications for acceptance, arrival, or cancellations.
 
 ---
 
 ### 🧾 Admin Capabilities (Optional)
-- View all bookings and statuses  
-- Manage driver accounts  
-- Monitor system analytics  
+- View all bookings and statuses.
+- Manage driver accounts.
+- Monitor system analytics.
 
 ---
 
-![App Banner](./frontend/images/erdiagram.jpeg)
 
 ---
 
@@ -66,9 +66,9 @@ The frontend connects seamlessly with the backend via **REST APIs and Socket.io*
 ### **Frontend**
 | Technology               | Purpose                                  |
 |--------------------------|-----------------------------------------|
-| **Next.js (React Framework)** | Core frontend framework                  |
+| **Next.js**              | Core frontend framework                  |
 | **Axios**                | API communication                        |
-| **Socket.io Client**     | Real-time updates between client & driver|
+| **Socket.io Client**     | Real-time updates                        |
 | **Google Maps API**      | Location tracking and map integration    |
 | **Tailwind CSS**         | Styling and responsive layout management |
 
@@ -81,29 +81,28 @@ The frontend connects seamlessly with the backend via **REST APIs and Socket.io*
 | **jsonwebtoken (JWT)**        | Authentication and route protection         |
 | **cors**                      | Enable cross-origin requests                |
 | **bcrypt**                    | Secure password hashing                      |
-| **Prisma**                    | ORM for SQL database management             |
+| **MongoDB & Mongoose**        | NoSQL database and ODM                      |
+| **Socket.io**                 | Real-time bidirectional communication       |
 
 ---
 
 ## 📜 API Documentation
 
 ### ⚡ Socket.io Events
-- **booking request** → Triggered by client to request an ambulance  
-- **booking accept** → Sent by driver upon accepting a booking  
-- **location update** → Continuously transmits driver’s live location  
-- **trip status emits** → Booking progress and completion updates  
+- **booking request** → Triggered by client to request an ambulance.
+- **booking accept** → Sent by driver upon accepting a booking.
+- **location update** → Continuously transmits driver’s live location.
+- **trip status emits** → Booking progress and completion updates.
 
 ---
 
 ## 🛠️ Full Setup & Installation Guide
 
 ### 1️⃣ Prerequisites
-- **Node.js** (v16 or later) → [Download Node.js](https://nodejs.org/)  
-- **npm** (comes with Node.js)  
-- **Git** → [Download Git](https://git-scm.com/)  
-- **SQL Database** (PostgreSQL/MySQL)  
-- **MongoDB** → for NoSQL storage  
-- Optional: **Postman** for testing APIs  
+- **Node.js** (v16 or later) → [Download Node.js](https://nodejs.org/)
+- **npm** (comes with Node.js)
+- **Git** → [Download Git](https://git-scm.com/)
+- **MongoDB** → [Download MongoDB](https://www.mongodb.com/try/download/community) or use MongoDB Atlas.
 
 ---
 
@@ -111,61 +110,65 @@ The frontend connects seamlessly with the backend via **REST APIs and Socket.io*
 ```bash
 git clone https://github.com/praggCode/AMB_One.git
 cd AMB_One
+```
 
-
-3️⃣ Install Dependencies
-Install all required packages using npm:
-npm install
-
-Backend Setup
-3️⃣ Navigate to Backend
+### 3️⃣ Backend Setup
+Navigate to the backend directory and install dependencies:
+```bash
 cd backend
-
-
-4️⃣ Install Dependencies
 npm install
+```
 
+Create a `.env` file in the `backend` directory with the following variables (example):
+```env
+PORT=4000
+DB_CONNECT=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
 
-5️⃣ Run Backend Server
-npm run dev
-
-Frontend Setup
-8️⃣ Navigate to Frontend
-cd ../frontend
-
-9️⃣ Install Dependencies
-npm install
-
-
-11️⃣ Run Frontend Server
+Run the backend server:
+```bash
 npm run dev
 ```
 
-### 🧪 Testing Guide ###
+### 4️⃣ Frontend Setup
+Navigate to the frontend directory:
+```bash
+cd ../frontend
+npm install
+```
 
-To verify the system’s functionality:
-* ✅ Test client OTP login using Firebase
-* ✅ Test driver login using email & password
-* ✅ Create and manage ambulance bookings
-* ✅ Monitor real-time booking status and driver tracking
-* ✅ Validate responsiveness across devices
-* ✅ Test Socket.io event flow (booking request → accept → complete)
-
-### 🌐 Backend Integration ###
-
- * Frontend communicates with backend via /api/... routes
-Uses Socket.io for instant updates between drivers and clients
-Implements JWT-based authentication for secure requests
-
-### 🧱 Future Enhancements ###
-
- * 📍 Advanced route optimization for drivers
- * 💳 Online Payment Integration (Razorpay / Stripe)
- * 🏥 Hospital Dashboard for centralized booking management
- * 🔊 Voice Alerts for driver notifications
- * 📱 Mobile App version (React Native / Flutter)
-
+Run the development server:
+```bash
+npm run dev
+```
 
 ---
 
+### 🧪 Testing Guide
 
+To verify the system’s functionality:
+* ✅ Test client login/signup.
+* ✅ Test driver login/signup.
+* ✅ Create and manage ambulance bookings.
+* ✅ Monitor real-time booking status and driver tracking.
+* ✅ Validate responsiveness across devices.
+* ✅ Test Socket.io event flow (booking request → accept → complete).
+
+---
+
+### 🌐 Backend Integration
+
+ * Frontend communicates with backend via `/api/...` routes.
+ * Uses Socket.io for instant updates between drivers and clients.
+ * Implements JWT-based authentication for secure requests.
+
+---
+
+### 🧱 Future Enhancements
+
+ * 📍 Advanced route optimization for drivers.
+ * 💳 Online Payment Integration (Razorpay / Stripe).
+ * 🏥 Hospital Dashboard for centralized booking management.
+ * 🔊 Voice Alerts for driver notifications.
+ * 📱 Mobile App version (React Native / Flutter).

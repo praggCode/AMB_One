@@ -110,10 +110,9 @@ const MapComponent = ({ pickup, destination, vehicleLocation, onLocationSelect, 
             center={defaultCenter}
             zoom={5}
             scrollWheelZoom={false}
-            zoomControl={false}
+            zoomControl={true}
             style={{ height: '100%', width: '100%', borderRadius: '1rem' }}
         >
-            <ZoomControl position="bottomleft" />
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

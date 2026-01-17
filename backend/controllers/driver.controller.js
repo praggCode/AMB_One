@@ -5,36 +5,44 @@ const jwt = require('jsonwebtoken');
 
 module.exports.registerDriver = async (req, res) => {
     const errors = validationResult(req)
-    if(!errors.isEmpty()) {
-        return res.status(400).json({errors: errors.array()})
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
     }
 
-    const {email, password, fullname, phoneNumber} = req.body
+    const { email, password, fullname, phoneNumber } = req.body
 
-    const hashedPassword = await driverModel.hashPassword(password)
-    const existingDriver = await DriverService.findDriverByEmail(email)
-    if(existingDriver) {
-        return res.status(400).json({error: "Driver already exists"})
+    try {
+        const hashedPassword = await driverModel.hashPassword(password)
+        const existingDriver = await DriverService.findDriverByEmail(email)
+        if (existingDriver) {
+            return res.status(400).json({ error: "Driver already exists" })
+        }
+
+        const driver = await DriverService.createDriver({
+            email,
+            password: hashedPassword,
+            fullname,
+            phoneNumber
+        })
+
+        const token = driverModel.generateAuthToken(driver)
+        res.cookie('token', token)
+        res.status(201).json({ token, driver })
+    } catch (error) {
+        console.error("Driver registration error:", error);
+        return res.status(500).json({
+            error: error.message || "Internal server error",
+            details: error.errors ? Object.values(error.errors).map(e => e.message) : []
+        });
     }
-
-    const driver = await DriverService.createDriver({
-        email,
-        password: hashedPassword,
-        fullname,
-        phoneNumber
-    })
-
-    const token = driverModel.generateAuthToken(driver)
-    res.cookie('token', token)
-    res.status(201).json({token, driver})
 }
 
 module.exports.loginDriver = async (req, res, next) => {
     const errors = validationResult(req)
-    if(!errors.isEmpty()){
+    if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
-    } 
-    const {email, password} = req.body
+    }
+    const { email, password } = req.body
     try {
         const driver = await DriverService.findDriverByEmail(email)
         if (!driver) {
@@ -58,7 +66,33 @@ module.exports.getDriverProfile = async (req, res, next) => {
     res.status(200).json(req.driver)
 }
 
+
 module.exports.logoutDriver = async (req, res, next) => {
     res.clearCookie('token');
     return res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports.updateDriverStatus = async (req, res, next) => {
+    try {
+        const { status } = req.body;
+
+        if (!status || !['active', 'inactive'].includes(status)) {
+            return res.status(400).json({ error: "Invalid status. Must be 'active' or 'inactive'" });
+        }
+
+        const driver = await driverModel.findByIdAndUpdate(
+            req.driver._id,
+            { status },
+            { new: true }
+        );
+
+        if (!driver) {
+            return res.status(404).json({ error: "Driver not found" });
+        }
+
+        res.status(200).json({ driver, message: `Status updated to ${status}` });
+    } catch (error) {
+        console.error("Update status error:", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
 };

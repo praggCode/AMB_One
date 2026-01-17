@@ -22,27 +22,25 @@ const defaultTabs = [
   { label: 'History', href: '/user/history' },
 ];
 
-export default function UserNav({ active = '', tabs = defaultTabs }) {
+export default function UserNav({ active = '', tabs = defaultTabs, role = 'user' }) {
   const router = useRouter();
   const { user, logout: userLogout } = useUser();
   const { driver, logout: driverLogout } = useDriver();
 
-  // Determine which profile to show (user or driver)
-  const profile = user || driver;
-  const isDriver = !!driver && !user;
+  // Determine which profile to show based on role
+  const profile = role === 'driver' ? driver : user;
+  const isDriver = role === 'driver';
   const logout = isDriver ? driverLogout : userLogout;
 
   // Get the display name based on user or driver structure
   const getDisplayName = () => {
-    if (user) {
-      return user.name || '';
-    }
-    if (driver) {
-      const firstName = driver.fullname?.firstName || '';
-      const lastName = driver.fullname?.lastName || '';
+    if (!profile) return '';
+    if (role === 'driver') {
+      const firstName = profile.fullname?.firstName || '';
+      const lastName = profile.fullname?.lastName || '';
       return `${firstName} ${lastName}`.trim();
     }
-    return '';
+    return profile.name || '';
   };
 
   const displayName = getDisplayName();
@@ -105,7 +103,7 @@ export default function UserNav({ active = '', tabs = defaultTabs }) {
                     </Avatar>
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuContent align="end" className="w-64 z-[1001]">
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-2">
                       <div className="flex items-center gap-2">
@@ -122,17 +120,18 @@ export default function UserNav({ active = '', tabs = defaultTabs }) {
                           </p>
                         </div>
                       )}
-                      {profile.phone && (
+                      {(profile.phone || profile.phoneNumber) && (
                         <div className="flex items-center gap-2">
                           <Phone className="h-4 w-4 text-gray-500" />
                           <p className="text-xs text-gray-600">
-                            {profile.phone}
+                            {profile.phone || profile.phoneNumber}
                           </p>
                         </div>
                       )}
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+
                   <DropdownMenuItem
                     onClick={logout}
                     className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
