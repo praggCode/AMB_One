@@ -1,6 +1,2 @@
-'use client';
-import HomePage from './CompPages/HomePage';
-
-export default function Home() {
-  return <HomePage />;
-}
+import HomePage from '@/modules/common/pages/HomePage';
+export default HomePage;

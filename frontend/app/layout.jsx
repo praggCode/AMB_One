@@ -1,8 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "../context/UserContext";
-import { DriverProvider } from "../context/DriverContext";
-import { Toaster } from "@/components/ui/sonner";
+import { UserProvider } from "@/modules/user/context/UserContext";
+import { DriverProvider } from "@/modules/driver/context/DriverContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +29,9 @@ export default function RootLayout({
         <UserProvider>
           <DriverProvider>
             {children}
-            <Toaster position="bottom-right" />
           </DriverProvider>
         </UserProvider>
       </body>
-    </html>
+    </html >
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import UserDashboard from '../CompPages/UserDashboard/UserDashboard';
+import UserDashboard from '@/modules/user/pages/Dashboard';
 import { Suspense } from 'react';
 
 function DashboardContent() {
@@ -16,7 +16,7 @@ function DashboardContent() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-2xl font-bold">Driver Dashboard</h1>
-        <p className="text-gray-600">Coming soon.</p>
+        <p className="text-gray-600">Please use the driver specific routes or select a valid role.</p>
       </div>
     </div>
   );
