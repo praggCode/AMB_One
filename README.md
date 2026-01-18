@@ -6,24 +6,24 @@ It allows patients and drivers to interact in real-time through a **secure, intu
 
 The system connects seamlessly with the backend via **REST APIs and Socket.io**, providing **real-time driver tracking, instant booking updates, and live trip status monitoring**.
 
-[👉 Know More](https://docs.google.com/document/d/1PusiJMiwpYbAUpjTGTYunxlPW24cd9GQwjgiNjclx7k/edit?tab=t.0#heading=h.namad6nbwei0)
+[ Know More](https://docs.google.com/document/d/1PusiJMiwpYbAUpjTGTYunxlPW24cd9GQwjgiNjclx7k/edit?tab=t.0#heading=h.namad6nbwei0)
 
 ---
 
-## 💻 Overview
+##  Overview
 
-- 🧭 **Unified Interface:**
+-  **Unified Interface:**
   - **Ambulance Booking App:** A comprehensive Next.js application for both Users and Drivers.
-- 🚑 **Clients:** Book ambulances, track drivers, and view booking history.
-- 👨‍✈️ **Drivers:** Log in, view assigned trips, and update trip statuses.
-- ⚡ **Real-time tracking & communication:** Powered by Socket.io & Google Maps API.
-- 💬 **Responsive design:** Optimized for both web and mobile users.
+-  **Clients:** Book ambulances, track drivers, and view booking history.
+-  **Drivers:** Log in, view assigned trips, and update trip statuses.
+-  **Real-time tracking & communication:** Powered by Socket.io & Google Maps API.
+-  **Responsive design:** Optimized for both web and mobile users.
 
 ---
 
-## ⚙️ Key Features
+## Key Features
 
-### 🔐 Authentication System
+### Authentication System
 **Client Authentication**
 - Secure login and registration.
 - JWT-based session management.
@@ -34,7 +34,7 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-### 🚗 Booking Management
+###  Booking Management
 - Clients can book ambulances with pickup & destination details.
 - System finds the **nearest available driver**.
 - Real-time trip updates: *Requested → Accepted → In Progress → Completed → Cancelled*.
@@ -42,7 +42,7 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-### 💬 Real-time Communication
+### Real-time Communication
 - Powered by **Socket.io**.
 - Real-time updates for:
   - Trip status changes.
@@ -51,7 +51,7 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-### 🧾 Admin Capabilities (Optional)
+### Admin Capabilities (Optional)
 - View all bookings and statuses.
 - Manage driver accounts.
 - Monitor system analytics.
@@ -61,7 +61,7 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 ### **Frontend**
 | Technology               | Purpose                                  |
@@ -86,9 +86,9 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-## 📜 API Documentation
+## API Documentation
 
-### ⚡ Socket.io Events
+### Socket.io Events
 - **booking request** → Triggered by client to request an ambulance.
 - **booking accept** → Sent by driver upon accepting a booking.
 - **location update** → Continuously transmits driver’s live location.
@@ -96,9 +96,9 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-## 🛠️ Full Setup & Installation Guide
+## Full Setup & Installation Guide
 
-### 1️⃣ Prerequisites
+###  Prerequisites
 - **Node.js** (v16 or later) → [Download Node.js](https://nodejs.org/)
 - **npm** (comes with Node.js)
 - **Git** → [Download Git](https://git-scm.com/)
@@ -106,13 +106,13 @@ The system connects seamlessly with the backend via **REST APIs and Socket.io**,
 
 ---
 
-### 2️⃣ Clone the Repository
+###  Clone the Repository
 ```bash
 git clone https://github.com/praggCode/AMB_One.git
 cd AMB_One
 ```
 
-### 3️⃣ Backend Setup
+###  Backend Setup
 Navigate to the backend directory and install dependencies:
 ```bash
 cd backend
@@ -131,7 +131,7 @@ Run the backend server:
 npm run dev
 ```
 
-### 4️⃣ Frontend Setup
+###  Frontend Setup
 Navigate to the frontend directory:
 ```bash
 cd ../frontend
@@ -145,19 +145,19 @@ npm run dev
 
 ---
 
-### 🧪 Testing Guide
+### Testing Guide
 
 To verify the system’s functionality:
-* ✅ Test client login/signup.
-* ✅ Test driver login/signup.
-* ✅ Create and manage ambulance bookings.
-* ✅ Monitor real-time booking status and driver tracking.
-* ✅ Validate responsiveness across devices.
-* ✅ Test Socket.io event flow (booking request → accept → complete).
+*  Test client login/signup.
+*  Test driver login/signup.
+*  Create and manage ambulance bookings.
+*  Monitor real-time booking status and driver tracking.
+*  Validate responsiveness across devices.
+*  Test Socket.io event flow (booking request → accept → complete).
 
 ---
 
-### 🌐 Backend Integration
+###  Backend Integration
 
  * Frontend communicates with backend via `/api/...` routes.
  * Uses Socket.io for instant updates between drivers and clients.
@@ -165,10 +165,11 @@ To verify the system’s functionality:
 
 ---
 
-### 🧱 Future Enhancements
+###  Future Enhancements
 
- * 📍 Advanced route optimization for drivers.
- * 💳 Online Payment Integration (Razorpay / Stripe).
- * 🏥 Hospital Dashboard for centralized booking management.
- * 🔊 Voice Alerts for driver notifications.
- * 📱 Mobile App version (React Native / Flutter).
+ *  Advanced route optimization for drivers.
+ *  Online Payment Integration (Razorpay / Stripe).
+ *  Hospital Dashboard for centralized booking management.
+ *  Voice Alerts for driver notifications.
+ *  Mobile App version (React Native / Flutter).
+
