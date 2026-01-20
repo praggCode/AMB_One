@@ -1,6 +1,6 @@
 # Frontend TODO List
 
-## 🚀 High Priority Features
+## High Priority Features
 - [ ] **Admin Dashboard:**
     - [ ] Create Admin Login Page.
     - [ ] Create Dashboard Home (Stats: Total Bookings, Active Drivers).
@@ -13,7 +13,7 @@
     - [ ] Create "Edit Profile" page for Users.
     - [ ] Create "Edit Profile" page for Drivers (Vehicle details, License).
 
-## 🎨 UI/UX Improvements
+## UI/UX Improvements
 - [ ] **Booking Flow:**
     - [ ] Add "Searching for Driver" animation.
     - [ ] Add "Ride Completed" summary screen with Fare details.
@@ -24,10 +24,10 @@
     - [ ] Create a global Error Boundary.
     - [ ] Show friendly error messages instead of alerts (e.g., "Login Failed").
 
-## 📱 Mobile Responsiveness
+## Mobile Responsiveness
 - [ ] **Navigation:** Ensure Sidebar/Navbar works on small screens.
 - [ ] **Map:** Ensure Map is usable on mobile (touch gestures).
 
-## 🧹 Code Quality
+## Code Quality
 - [ ] **Type Safety:** Consider migrating to TypeScript.
 - [ ] **Components:** Refactor reusable UI elements (Buttons, Inputs) into `components/ui`.
