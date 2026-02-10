@@ -15,7 +15,6 @@ const createTransporter = async () => {
         },
     });
 
-    console.log('Email Service: Transporter created with Ethereal account:', testAccount.user);
     return transporter;
 };
 
@@ -29,8 +28,6 @@ const sendEmail = async (to, subject, html) => {
             html,
         });
 
-        console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         return info;
     } catch (error) {
         console.error("Error sending email:", error);

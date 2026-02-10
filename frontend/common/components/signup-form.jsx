@@ -25,6 +25,14 @@ export function SignupForm({
   const handleCreateAccount = async (e) => {
     e.preventDefault();
     setError("");
+    if (phone.length < 10) {
+      setError("Phone number must be at least 10 digits");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
     let result;
 
     if (role === 'driver') {
@@ -66,6 +74,11 @@ export function SignupForm({
                 {role === 'driver' ? 'Join our team of drivers' : 'Get started with emergency services'}
               </p>
             </div>
+            {error && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-sm font-medium">❌ {error}</p>
+              </div>
+            )}
 
             <FieldGroup className="space-y-4">
               <Field>
@@ -101,10 +114,15 @@ export function SignupForm({
                   type="tel"
                   placeholder="1234567890"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                   required
+                  minLength={10}
+                  maxLength={15}
                   className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
+                <FieldDescription className="text-xs text-gray-500 mt-1">
+                  Enter 10-15 digit phone number
+                </FieldDescription>
               </Field>
 
               <Field>
@@ -119,7 +137,7 @@ export function SignupForm({
                   className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
                 <FieldDescription className="text-xs text-gray-500 mt-1">
-                  Must be at least 8 characters long
+                  Must be at least 6 characters
                 </FieldDescription>
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </Field>

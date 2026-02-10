@@ -11,11 +11,8 @@ module.exports.initializeSocket = (server) => {
     });
 
     io.on('connection', (socket) => {
-        console.log('New client connected:', socket.id);
-
         socket.on('join', (data) => {
             socket.join(data.userId);
-            console.log(`User ${data.userId} joined room`);
         });
 
         socket.on('update-location', (data) => {
@@ -24,7 +21,7 @@ module.exports.initializeSocket = (server) => {
         });
 
         socket.on('disconnect', () => {
-            console.log('Client disconnected:', socket.id);
+            // Client disconnected
         });
     });
 };

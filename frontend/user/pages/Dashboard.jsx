@@ -69,7 +69,6 @@ export default function UserDashboard() {
     newSocket.emit('join', { userId: currentBooking._id });
 
     newSocket.on('receive-location', (data) => {
-      console.log("Received location update:", data);
       if (data.location) {
         setVehicleLocation(data.location);
       }
