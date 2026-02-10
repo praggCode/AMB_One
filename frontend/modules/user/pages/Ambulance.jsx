@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import UserNav from '@/modules/user/components/UserNav';
 import dynamic from 'next/dynamic';
 import { useUser } from '@/modules/user/context/UserContext';
-import api from '@/modules/common/lib/api';
+import { api } from '@/modules/common/lib/api';
 import AddressAutocomplete from '@/modules/common/components/AddressAutocomplete';
 
 const MapComponent = dynamic(() => import('@/modules/common/components/MapComponent'), {

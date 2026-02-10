@@ -5,7 +5,7 @@ import UserNav from '@/modules/user/components/UserNav';
 import { Clock, User, ChevronRight, LayoutDashboard } from "lucide-react";
 import { useDriver } from "@/modules/driver/context/DriverContext";
 import { useRouter } from "next/navigation"
-import api from '@/modules/common/lib/api';
+import { api } from '@/modules/common/lib/api';
 
 export default function DriverDashboard() {
     const { driver, loading } = useDriver();

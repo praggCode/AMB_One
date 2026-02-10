@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Clock, MapPin, User, Phone, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import UserNav from '@/modules/user/components/UserNav';
-import api from '@/modules/common/lib/api';
+import { api } from '@/modules/common/lib/api';
 import { useUser } from '@/modules/user/context/UserContext';
 import { io } from 'socket.io-client';
 import dynamic from 'next/dynamic';
@@ -69,7 +69,6 @@ export default function UserDashboard() {
     newSocket.emit('join', { userId: currentBooking._id });
 
     newSocket.on('receive-location', (data) => {
-      console.log("Received location update:", data);
       if (data.location) {
         setVehicleLocation(data.location);
       }

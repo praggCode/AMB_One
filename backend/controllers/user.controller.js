@@ -1,13 +1,11 @@
 const User = require("../models/user.model");
 const userService = require("../services/user.service");
 const { validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken"); // Import jsonwebtoken
+const jwt = require("jsonwebtoken"); 
 
 module.exports.registerUser = async (req, res, next) => {
-  console.log("Register Request Body:", req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log("Validation Errors:", errors.array());
     return res.status(400).json({ errors: errors.array() });
   }
   try {
