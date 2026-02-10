@@ -81,7 +81,7 @@ export default function UserHistory() {
 
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <MapPin className="h-4 w-4 text-[#D70040] mt-0.5" />
+                    <MapPin className="h-4 w-4 text-blue-600 mt-0.5" />
                     <div>
                       <p className="text-xs text-gray-500">Pickup</p>
                       <p className="text-gray-900 font-medium">{trip.pickupLocation}</p>

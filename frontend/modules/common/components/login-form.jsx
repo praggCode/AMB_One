@@ -57,7 +57,7 @@ export function LoginForm({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
+                  className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
               </Field>
 
@@ -70,14 +70,14 @@ export function LoginForm({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
+                  className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </Field>
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-[#D70040] hover:bg-[#B8003A] text-white font-semibold"
+                className="w-full h-12 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl"
               >
                 Sign In
               </Button>
@@ -85,7 +85,7 @@ export function LoginForm({
 
             <FieldDescription className="text-center mt-2">
               Don&apos;t have an account?{' '}
-              <a href={`/signup?role=${role || 'user'}`} className="text-[#D70040] hover:underline font-semibold">
+              <a href={`/signup?role=${role || 'user'}`} className="text-[#2563EB] hover:underline font-semibold">
                 Sign up
               </a>
             </FieldDescription>

@@ -80,14 +80,14 @@ export default function RequestDetails({ params }) {
                                         <h3 className="text-xl font-bold text-gray-900 mb-4">Patient & Trip Info</h3>
                                         <div className="bg-gray-50 rounded-2xl p-6 space-y-4">
                                             <div className="flex items-center gap-4">
-                                                <User className="text-[#D70040]" />
+                                                <User className="text-[#2563EB]" />
                                                 <div>
                                                     <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Patient Name</p>
                                                     <p className="text-gray-900 font-bold text-lg">{booking.patientName}</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-4">
-                                                <MapPin className="text-[#D70040]" />
+                                                <MapPin className="text-[#2563EB]" />
                                                 <div>
                                                     <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Pickup From</p>
                                                     <p className="text-gray-900 font-medium">{booking.pickup}</p>
@@ -105,7 +105,7 @@ export default function RequestDetails({ params }) {
 
                                     {booking.notes && (
                                         <div className="p-4 bg-red-50 rounded-xl border border-red-100">
-                                            <p className="text-xs text-[#D70040] font-bold uppercase tracking-wider mb-1">Medical Notes</p>
+                                            <p className="text-xs text-[#2563EB] font-bold uppercase tracking-wider mb-1">Medical Notes</p>
                                             <p className="text-gray-700">{booking.notes}</p>
                                         </div>
                                     )}
@@ -121,7 +121,7 @@ export default function RequestDetails({ params }) {
                                     </button>
                                     <button
                                         onClick={handleAccept}
-                                        className="flex items-center justify-center gap-2 bg-[#D70040] hover:bg-[#B60035] text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-red-500/20"
+                                        className="flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700 text-white py-4 px-6 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl"
                                     >
                                         <CheckCircle2 size={20} />
                                         Accept Request

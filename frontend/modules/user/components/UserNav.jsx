@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/modules/common/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/modules/common/ui/avatar';
+//navigation bar (header) for users and drivers.
 
 const defaultTabs = [
   { label: 'Dashboard', href: '/user/dashboard' },
@@ -81,7 +82,7 @@ export default function UserNav({ active = '', tabs = defaultTabs, role = 'user'
                   <button
                     key={tab.href}
                     className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${isActive
-                      ? 'bg-[#D70040] text-white'
+                      ? 'bg-[#2563EB] text-white shadow-lg'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     onClick={() => router.push(tab.href)}
@@ -96,8 +97,8 @@ export default function UserNav({ active = '', tabs = defaultTabs, role = 'user'
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-2 focus:outline-none hover:opacity-80 transition-opacity">
-                    <Avatar className="h-10 w-10 border-2 border-[#D70040]">
-                      <AvatarFallback className="bg-[#D70040] text-white font-bold">
+                    <Avatar className="h-10 w-10 border-2 border-[#2563EB]">
+                      <AvatarFallback className="bg-[#2563EB] text-white font-bold">
                         {getInitials(displayName)}
                       </AvatarFallback>
                     </Avatar>

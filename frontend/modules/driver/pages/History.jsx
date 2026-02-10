@@ -77,7 +77,7 @@ export default function DriverHistory() {
 
                             <div className="space-y-2 relative pl-4 border-l-2 border-gray-100 ml-1">
                                 <div className="relative">
-                                    <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#D70040] ring-4 ring-white" />
+                                    <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#2563EB] ring-4 ring-white" />
                                     <p className="text-sm text-gray-900 truncate">{trip.pickup}</p>
                                 </div>
                                 <div className="relative">

@@ -36,7 +36,7 @@ export const DriverProvider = ({ children }) => {
             }
             // Refetch driver profile to ensure all data is loaded
             await checkDriverLoggedIn();
-            router.push('/driver/dashboard'); // Adjust route
+            router.push('/driver/dashboard');
             return { success: true };
         } catch (error) {
             if (error.response?.status !== 401) {

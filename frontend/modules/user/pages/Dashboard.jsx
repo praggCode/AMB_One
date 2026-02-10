@@ -101,19 +101,19 @@ export default function UserDashboard() {
             <p className="text-gray-600 text-lg mt-1">Welcome back, {user?.name}!</p>
           </div>
           <button
-            className="bg-[#D70040] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#B8003A] transition-all shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40"
+            className="bg-[#2563EB] text-white px-8 py-3.5 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-105"
             onClick={() => router.push('/user/ambulance')}
           >
             + Book Ambulance
           </button>
         </div>
 
-        <div className="bg-red-50 border-l-4 border-[#D70040] rounded-xl p-5 mb-8 flex items-start gap-4">
-          <AlertCircle className="w-6 h-6 text-[#D70040] flex-shrink-0 mt-0.5" />
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-xl p-5 mb-8 flex items-start gap-4">
+          <AlertCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h3 className="text-[#D70040] font-bold text-lg mb-1">Emergency?</h3>
+            <h3 className="text-blue-600 font-bold text-lg mb-1">Emergency?</h3>
             <p className="text-gray-700">
-              For immediate emergency services, please call <span className="font-bold text-[#D70040]">102</span> or your local emergency number.
+              For immediate emergency services, please call <span className="font-bold text-blue-600">102</span> or your local emergency number.
             </p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function UserDashboard() {
             <h3 className="text-2xl font-bold text-gray-900">Current Booking</h3>
             {currentBooking && (
               <button
-                className="text-sm font-semibold text-gray-500 hover:text-[#D70040] transition-colors"
+                className="text-sm font-semibold text-gray-500 hover:text-blue-600 transition-colors"
                 onClick={handleClearBooking}
               >
                 Clear
@@ -144,7 +144,7 @@ export default function UserDashboard() {
                       <span className="text-sm">{formatDate(currentBooking.createdAt)}</span>
                     </div>
                   </div>
-                  <span className="bg-[#D70040] text-white px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wide">
+                  <span className="bg-[#2563EB] text-white px-5 py-2.5 rounded-full text-sm font-bold uppercase tracking-wide shadow-lg shadow-blue-500/30">
                     {currentBooking.status || 'Pending'}
                   </span>
                 </div>
@@ -169,8 +169,8 @@ export default function UserDashboard() {
                 )}
                 <div className="space-y-6 mb-8">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-[#D70040]" />
+                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-5 h-5 text-blue-600" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Pickup Location</p>
@@ -180,7 +180,7 @@ export default function UserDashboard() {
 
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-[#D70040]" />
+                      <MapPin className="w-5 h-5 text-[#E84D4D]" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Destination</p>
@@ -235,7 +235,7 @@ export default function UserDashboard() {
                 <h4 className="text-xl font-bold text-gray-900 mb-2">No active bookings</h4>
                 <p className="text-gray-600 mb-6">Create a new booking to see it here.</p>
                 <button
-                  className="inline-flex items-center rounded-xl bg-[#D70040] px-6 py-3 text-sm font-semibold text-white hover:bg-[#B8003A] transition-all"
+                  className="inline-flex items-center rounded-xl bg-[#2563EB] px-8 py-3.5 text-sm font-bold text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-105"
                   onClick={() => router.push('/user/ambulance')}
                 >
                   Book an ambulance

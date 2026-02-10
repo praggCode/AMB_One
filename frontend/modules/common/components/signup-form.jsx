@@ -77,7 +77,7 @@ export function SignupForm({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
+                  className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
               </Field>
 
@@ -90,7 +90,7 @@ export function SignupForm({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
+                  className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
               </Field>
 
@@ -103,7 +103,7 @@ export function SignupForm({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
+                  className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
               </Field>
 
@@ -116,7 +116,7 @@ export function SignupForm({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12 border-gray-300 focus:border-[#D70040] focus:ring-[#D70040]"
+                  className="h-12 border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB]"
                 />
                 <FieldDescription className="text-xs text-gray-500 mt-1">
                   Must be at least 8 characters long
@@ -126,7 +126,7 @@ export function SignupForm({
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-[#D70040] hover:bg-[#B8003A] text-white font-semibold mt-2"
+                className="w-full h-12 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold mt-2 transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl"
               >
                 Create Account
               </Button>
@@ -134,7 +134,7 @@ export function SignupForm({
 
             <FieldDescription className="text-center mt-6">
               Already have an account?{' '}
-              <a href={`/login?role=${role || 'user'}`} className="text-[#D70040] hover:underline font-semibold">
+              <a href={`/login?role=${role || 'user'}`} className="text-[#2563EB] hover:underline font-semibold">
                 Sign in
               </a>
             </FieldDescription>

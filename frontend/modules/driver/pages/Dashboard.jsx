@@ -100,7 +100,7 @@ export default function DriverDashboard() {
 
                 <div className="space-y-6">
                     {driverTrip && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow border-l-4 border-l-[#D70040]">
+                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow border-l-4 border-l-[#2563EB]">
                             <div className="p-6">
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
@@ -110,14 +110,14 @@ export default function DriverDashboard() {
                                             {new Date(driverTrip.createdAt).toLocaleString()}
                                         </div>
                                     </div>
-                                    <span className="px-3 py-1 bg-[#D70040] text-white text-xs font-bold rounded-full uppercase tracking-wide">
+                                    <span className="px-3 py-1 bg-[#2563EB] text-white text-xs font-bold rounded-full uppercase tracking-wide">
                                         Accepted
                                     </span>
                                 </div>
 
                                 <div className="space-y-4 mb-6">
                                     <div className="flex items-start gap-3">
-                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#D70040] ring-4 ring-[#FFD6E0]" />
+                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#2563EB] ring-4 ring-blue-100" />
                                         <div>
                                             <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Pickup</p>
                                             <p className="text-gray-900 font-medium">{driverTrip.pickup}</p>
@@ -125,7 +125,7 @@ export default function DriverDashboard() {
                                     </div>
 
                                     <div className="flex items-start gap-3">
-                                        <div className="mt-1 w-2 h-2 rounded-full bg-red-500 ring-4 ring-red-50" />
+                                        <div className="mt-1 w-2 h-2 rounded-full bg-[#E84D4D] ring-4 ring-red-50" />
                                         <div>
                                             <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Destination</p>
                                             <p className="text-gray-900 font-medium">{driverTrip.destination}</p>
@@ -143,7 +143,7 @@ export default function DriverDashboard() {
 
                                 <Link
                                     href={`/driver/trip/${driverTrip._id}`}
-                                    className="w-full flex items-center justify-center gap-2 bg-[#D70040] hover:bg-[#B60035] text-white py-3 px-4 rounded-xl font-medium transition-colors"
+                                    className="w-full flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-medium transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl"
                                 >
                                     View Details
                                     <ChevronRight size={18} />
@@ -185,7 +185,7 @@ export default function DriverDashboard() {
 
                                         <div className="space-y-4 mb-6">
                                             <div className="flex items-start gap-3">
-                                                <div className="mt-1 w-2 h-2 rounded-full bg-[#D70040] ring-4 ring-[#FFD6E0]" />
+                                                <div className="mt-1 w-2 h-2 rounded-full bg-[#2563EB] ring-4 ring-blue-100" />
                                                 <div>
                                                     <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Pickup</p>
                                                     <p className="text-gray-900 font-medium">{booking.pickup}</p>
@@ -193,7 +193,7 @@ export default function DriverDashboard() {
                                             </div>
 
                                             <div className="flex items-start gap-3">
-                                                <div className="mt-1 w-2 h-2 rounded-full bg-red-500 ring-4 ring-red-50" />                                     <div>
+                                                <div className="mt-1 w-2 h-2 rounded-full bg-[#E84D4D] ring-4 ring-red-50" />                                     <div>
                                                     <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Destination</p>
                                                     <p className="text-gray-900 font-medium">{booking.destination}</p>
                                                 </div>
@@ -210,7 +210,7 @@ export default function DriverDashboard() {
 
                                         <Link
                                             href={`/driver/request/${booking._id}`}
-                                            className="w-full flex items-center justify-center gap-2 bg-[#D70040] hover:bg-[#B60035] text-white py-3 px-4 rounded-xl font-medium transition-colors"
+                                            className="w-full flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-medium transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl"
                                         >
                                             View Request
                                             <ChevronRight size={18} />

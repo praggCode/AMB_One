@@ -105,7 +105,7 @@ export default function TripDetailsAccepted({ params }) {
                                         <h3 className="text-xl font-bold text-gray-900 mb-4">Patient Details</h3>
                                         <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
                                             <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center border border-gray-200 shadow-sm">
-                                                <User className="text-[#D70040]" />
+                                                <User className="text-[#2563EB]" />
                                             </div>
                                             <div>
                                                 <p className="font-bold text-gray-900 text-lg">{booking.patientName}</p>
@@ -121,7 +121,7 @@ export default function TripDetailsAccepted({ params }) {
                                         <h3 className="text-xl font-bold text-gray-900 mb-4">Trip Route</h3>
                                         <div className="space-y-6 relative pl-4 border-l-2 border-dashed border-gray-200 ml-2">
                                             <div className="relative">
-                                                <div className="absolute -left-[25px] top-1.5 w-4 h-4 rounded-full bg-[#D70040] ring-4 ring-white" />
+                                                <div className="absolute -left-[25px] top-1.5 w-4 h-4 rounded-full bg-[#2563EB] ring-4 ring-white" />
                                                 <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Pickup Location</p>
                                                 <p className="text-gray-900 font-medium">{booking.pickup}</p>
                                             </div>
@@ -136,7 +136,7 @@ export default function TripDetailsAccepted({ params }) {
 
                                 <button
                                     onClick={handleCompleteTrip}
-                                    className="w-full bg-[#D70040] hover:bg-[#B60035] text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all shadow-lg shadow-red-500/20 mt-8 flex items-center justify-center gap-2"
+                                    className="w-full bg-[#2563EB] hover:bg-blue-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl mt-8 flex items-center justify-center gap-2"
                                 >
                                     <CheckCircle2 size={24} />
                                     Complete Trip
