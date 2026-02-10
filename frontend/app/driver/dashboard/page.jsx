@@ -1,2 +1,2 @@
-import Dashboard from '@/modules/driver/pages/Dashboard';
+import Dashboard from '@/driver/pages/Dashboard';
 export default Dashboard;

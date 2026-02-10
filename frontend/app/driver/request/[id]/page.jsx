@@ -1,2 +1,2 @@
-import Request from '@/modules/driver/pages/Request';
+import Request from '@/driver/pages/Request';
 export default Request;

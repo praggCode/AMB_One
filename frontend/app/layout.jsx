@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@/modules/user/context/UserContext";
-import { DriverProvider } from "@/modules/driver/context/DriverContext";
+import { UserProvider } from "@/user/context/UserContext";
+import { DriverProvider } from "@/driver/context/DriverContext";
+import { ThemeProvider } from "@/common/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Ambulance Booking System",
+  title: "AmbuConnect",
   description: "Fast & Reliable Ambulance Service",
 };
 
@@ -22,15 +23,22 @@ export default function RootLayout({
   children,
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
-          <DriverProvider>
-            {children}
-          </DriverProvider>
-        </UserProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          forcedTheme="light"
+          disableTransitionOnChange
+        >
+          <UserProvider>
+            <DriverProvider>
+              {children}
+            </DriverProvider>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html >
   );

@@ -1,2 +1,2 @@
-import Dashboard from '@/modules/user/pages/Dashboard';
+import Dashboard from '@/user/pages/Dashboard';
 export default Dashboard;

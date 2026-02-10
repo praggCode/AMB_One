@@ -1,2 +1,2 @@
-import Trip from '@/modules/driver/pages/Trip';
+import Trip from '@/driver/pages/Trip';
 export default Trip;

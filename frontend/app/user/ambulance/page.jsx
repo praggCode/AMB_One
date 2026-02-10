@@ -1,2 +1,2 @@
-import Ambulance from '@/modules/user/pages/Ambulance';
+import Ambulance from '@/user/pages/Ambulance';
 export default Ambulance;

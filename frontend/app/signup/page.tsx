@@ -1,2 +1,2 @@
-import SignupPage from '@/modules/common/pages/Signup';
+import SignupPage from '@/common/pages/Signup';
 export default SignupPage;

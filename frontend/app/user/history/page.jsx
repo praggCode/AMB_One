@@ -1,2 +1,2 @@
-import History from '@/modules/user/pages/History';
+import History from '@/user/pages/History';
 export default History;
