@@ -6,10 +6,10 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 
 router.post('/register',
-  body('email').isEmail().withMessage('Email is required'),
-  body('phone').isLength({ min: 10 }).withMessage('Phone number must be at least 10 digits'),
-  body('name').notEmpty().withMessage('Name is required'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+  body('email').isEmail().withMessage('Invalid email address'),
+  body('phone').isLength({ min: 10, max: 15 }).withMessage('Phone number must be between 10-15 digits'),
+  body('name').isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   userController.registerUser
 )
 

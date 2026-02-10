@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import UserNav from '@/modules/user/components/UserNav';
 import { Clock, MapPin } from 'lucide-react';
-import api from '@/modules/common/lib/api';
+import { api } from '@/modules/common/lib/api';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/modules/user/context/UserContext';
 

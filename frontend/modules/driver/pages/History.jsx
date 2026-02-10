@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import UserNav from '@/modules/user/components/UserNav';
 import { Clock, CheckCircle2, Calendar, Trash2 } from "lucide-react";
-import api from '@/modules/common/lib/api';
+import { api } from '@/modules/common/lib/api';
 
 export default function DriverHistory() {
     const [historyTrips, setHistoryTrips] = useState([]);

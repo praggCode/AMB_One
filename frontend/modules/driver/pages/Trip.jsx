@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import UserNav from "@/modules/user/components/UserNav";
 import { useRouter } from "next/navigation";
 import { MapPin, User, Clock, Phone, Navigation, CheckCircle2 } from "lucide-react";
-import api from '@/modules/common/lib/api';
+import { api } from '@/modules/common/lib/api';
 import { io } from 'socket.io-client';
 import dynamic from 'next/dynamic';
 
