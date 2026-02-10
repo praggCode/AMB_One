@@ -1,29 +1,29 @@
 'use client';
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { api } from '../../common/lib/api';
+import api from '@/common/lib/api';
 import { useRouter } from 'next/navigation';
 
-const DriverContext = createContext();
+const UserContext = createContext();
 
-export const DriverProvider = ({ children }) => {
-    const [driver, setDriver] = useState(null);
+export const UserProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
-        checkDriverLoggedIn();
+        checkUserLoggedIn();
     }, []);
 
-    const checkDriverLoggedIn = async () => {
+    const checkUserLoggedIn = async () => {
         if (!api) return;
         try {
-            const { data } = await api.get('/driver/profile');
-            setDriver(data);
+            const { data } = await api.get('/users/profile');
+            setUser(data);
         } catch (error) {
             if (error.response?.status !== 401) {
-                console.error("Driver not logged in", error);
+                console.error("Not logged in", error);
             }
-            setDriver(null);
+            setUser(null);
         } finally {
             setLoading(false);
         }
@@ -35,13 +35,13 @@ export const DriverProvider = ({ children }) => {
             return { success: false, message: "System error: API unavailable" };
         }
         try {
-            const { data } = await api.post('/driver/login', { email, password });
+            const { data } = await api.post('/users/login', { email, password });
             if (data.token) {
-                localStorage.setItem('driverToken', data.token);
+                localStorage.setItem('userToken', data.token);
             }
-            // Refetch driver profile to ensure all data is loaded
-            await checkDriverLoggedIn();
-            router.push('/driver/dashboard');
+            // Refetch user profile to ensure all data is loaded
+            await checkUserLoggedIn();
+            router.push('/user/dashboard');
             return { success: true };
         } catch (error) {
             if (error.response?.status !== 401) {
@@ -52,19 +52,19 @@ export const DriverProvider = ({ children }) => {
         }
     };
 
-    const register = async (driverData) => {
+    const register = async (userData) => {
         if (!api || !api.post) {
             console.error("API client not initialized");
             return { success: false, message: "System error: API unavailable" };
         }
         try {
-            const { data } = await api.post('/driver/register', driverData);
+            const { data } = await api.post('/users/register', userData);
             if (data.token) {
-                localStorage.setItem('driverToken', data.token);
+                localStorage.setItem('userToken', data.token);
             }
-            // Refetch driver profile to ensure all data is loaded
-            await checkDriverLoggedIn();
-            router.push('/driver/dashboard');
+            // Refetch user profile to ensure all data is loaded
+            await checkUserLoggedIn();
+            router.push('/user/dashboard');
             return { success: true };
         } catch (error) {
             console.error("Registration failed", error);
@@ -75,20 +75,20 @@ export const DriverProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await api.post('/driver/logout');
-            setDriver(null);
-            localStorage.removeItem('driverToken');
-            router.push('/login?role=driver');
+            await api.post('/users/logout');
+            setUser(null);
+            localStorage.removeItem('userToken');
+            router.push('/login');
         } catch (error) {
             console.error("Logout failed", error);
         }
     };
 
     return (
-        <DriverContext.Provider value={{ driver, login, register, logout, loading }}>
+        <UserContext.Provider value={{ user, login, register, logout, loading }}>
             {children}
-        </DriverContext.Provider>
+        </UserContext.Provider>
     );
 };
 
-export const useDriver = () => useContext(DriverContext);
+export const useUser = () => useContext(UserContext);

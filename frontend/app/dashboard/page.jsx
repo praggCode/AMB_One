@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import UserDashboard from '@/user/pages/Dashboard';
+import UserDashboard from '@/app/user/dashboard/page';
 import { Suspense } from 'react';
 
 function DashboardContent() {

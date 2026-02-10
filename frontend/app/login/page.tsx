@@ -1,2 +1,2 @@
-import LoginPage from '@/common/pages/Login';
+import LoginPage from '@/auth/Login';
 export default LoginPage;

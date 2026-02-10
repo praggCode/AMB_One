@@ -1,2 +1,2 @@
-import SignupPage from '@/common/pages/Signup';
+import SignupPage from '@/auth/Signup';
 export default SignupPage;

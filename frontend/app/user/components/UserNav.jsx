@@ -2,8 +2,8 @@
 
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/user/context/UserContext';
-import { useDriver } from '@/driver/context/DriverContext';
+import { useUser } from '@/app/user/context/UserContext';
+import { useDriver } from '@/app/driver/context/DriverContext';
 import Sidebar from '@/common/components/Sidebar';
 
 const defaultTabs = [

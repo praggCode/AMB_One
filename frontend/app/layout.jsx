@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@/user/context/UserContext";
-import { DriverProvider } from "@/driver/context/DriverContext";
+import { UserProvider } from "@/app/user/context/UserContext";
+import { DriverProvider } from "@/app/driver/context/DriverContext";
 import { ThemeProvider } from "@/common/components/theme-provider";
 
 const geistSans = Geist({
