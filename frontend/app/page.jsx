@@ -1,2 +1,2 @@
-import HomePage from '@/modules/common/pages/HomePage';
+import HomePage from '@/common/pages/HomePage';
 export default HomePage;

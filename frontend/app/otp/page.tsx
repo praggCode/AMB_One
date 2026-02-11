@@ -1,2 +1,2 @@
-import OTPPage from '@/modules/common/pages/OTP';
+import OTPPage from '@/auth/OTP';
 export default OTPPage;
