@@ -19,8 +19,8 @@ function LoginContent() {
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-10"></div>
         <div className="relative z-10 w-3/4 max-w-lg">
           <img
-            src="/ambulance.webp"
-            alt="Ambulance"
+            src={role === 'driver' ? "/Ambulance.png" : "/ambulance.webp"}
+            alt={role === 'driver' ? "Ambulance" : "Patient Illustration"}
             className="w-full h-auto drop-shadow-2xl rounded-lg"
           />
           <div className="text-center mt-8 space-y-2">
