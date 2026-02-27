@@ -21,6 +21,12 @@ router.put('/:id/status',
     bookingController.updateBookingStatus
 );
 
+router.patch('/:id/status',
+    authMiddleware.authDriver,
+    body('status').isIn(['accepted', 'arrived', 'completed', 'cancelled']).withMessage('Invalid status'),
+    bookingController.updateBookingStatus
+);
+
 router.get('/pending',
     authMiddleware.authDriver,
     query('lat').optional().isNumeric().withMessage('Latitude must be a number'),
