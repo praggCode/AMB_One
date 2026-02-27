@@ -14,7 +14,7 @@ const MapComponent = dynamic(() => import('@/common/components/MapComponent'), {
 
 export default function TripDetailsAccepted({ params }) {
     const router = useRouter();
-    const id = params.id;
+    const { id } = React.use(params);
     const [booking, setBooking] = useState(null);
     const [vehicleLocation, setVehicleLocation] = useState(null);
     const [socket, setSocket] = useState(null);
@@ -65,7 +65,7 @@ export default function TripDetailsAccepted({ params }) {
 
     const handleCompleteTrip = async () => {
         try {
-            await api.patch(`/bookings/${id}/status`, { status: "completed" });
+            await api.put(`/bookings/${id}/status`, { status: "completed" });
             router.push('/driver/dashboard');
         } catch (error) {
             console.error("Failed to complete trip:", error);

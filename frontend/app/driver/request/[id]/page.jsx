@@ -13,10 +13,7 @@ const MapComponent = dynamic(() => import('@/common/components/MapComponent'), {
 
 export default function RequestDetails({ params }) {
     const router = useRouter();
-    // In Next.js App Router (prior to 15), params is a prop. In 15, it's a promise. 
-    // Assuming 14 or lower based on previous code usually accessing params directly.
-    // If it breaks, I'll fix it to await params.
-    const id = params.id;
+    const { id } = React.use(params);
     const [booking, setBooking] = useState(null);
 
     const driverTabs = [
@@ -38,7 +35,7 @@ export default function RequestDetails({ params }) {
 
     const handleAccept = async () => {
         try {
-            await api.patch(`/bookings/${id}/status`, { status: "accepted" });
+            await api.put(`/bookings/${id}/status`, { status: "accepted" });
             router.push(`/driver/trip/${id}`);
         } catch (error) {
             console.error("Failed to accept booking:", error);
@@ -47,7 +44,7 @@ export default function RequestDetails({ params }) {
 
     const handleDecline = async () => {
         try {
-            await api.patch(`/bookings/${id}/status`, { status: "declined" });
+            await api.put(`/bookings/${id}/status`, { status: "declined" });
             router.push('/driver/dashboard');
         } catch (error) {
             console.error("Failed to decline booking:", error);
