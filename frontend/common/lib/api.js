@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+let baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+if (typeof window !== 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    if (window.location.hostname !== 'localhost') {
+        baseURL = `http://${window.location.hostname}:4000`;
+    }
+}
+
 export const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000',
+    baseURL,
     withCredentials: true,
     headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',

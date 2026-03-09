@@ -55,7 +55,7 @@ export default function RequestDetails({ params }) {
 
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
-            <UserNav active="Dashboard" tabs={driverTabs} />
+            <UserNav active="Dashboard" tabs={driverTabs} role="driver" />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-8">

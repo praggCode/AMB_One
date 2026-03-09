@@ -44,7 +44,7 @@ export default function Sidebar({ links, user, logout }) {
             .slice(0, 2);
     };
 
-    const displayName = user?.name || (user?.fullname?.firstName ? `${user.fullname.firstName} ${user.fullname.lastName}` : "User");
+    const displayName = user?.name || (user?.fullname?.firstName ? `${user.fullname.firstName}${user.fullname.lastName ? ` ${user.fullname.lastName}` : ''}` : "User");
     const displayEmail = user?.email || "";
 
     const SidebarContent = () => (

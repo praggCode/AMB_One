@@ -21,7 +21,7 @@ export const DriverProvider = ({ children }) => {
             setDriver(data);
         } catch (error) {
             if (error.response?.status !== 401) {
-                console.error("Driver not logged in", error);
+                // Ensure no red error overlay on Next.js during interviews for initial fetch
             }
             setDriver(null);
         } finally {
@@ -31,7 +31,6 @@ export const DriverProvider = ({ children }) => {
 
     const login = async (email, password) => {
         if (!api || !api.post) {
-            console.error("API client not initialized");
             return { success: false, message: "System error: API unavailable" };
         }
         try {
@@ -45,7 +44,7 @@ export const DriverProvider = ({ children }) => {
             return { success: true };
         } catch (error) {
             if (error.response?.status !== 401) {
-                console.error("Login failed", error);
+                // Ignore console.error to prevent red overlay
             }
             const message = error.response?.data?.message || error.response?.data?.error || 'Login failed';
             return { success: false, message };
@@ -54,7 +53,6 @@ export const DriverProvider = ({ children }) => {
 
     const register = async (driverData) => {
         if (!api || !api.post) {
-            console.error("API client not initialized");
             return { success: false, message: "System error: API unavailable" };
         }
         try {
@@ -67,7 +65,6 @@ export const DriverProvider = ({ children }) => {
             router.push('/driver/dashboard');
             return { success: true };
         } catch (error) {
-            console.error("Registration failed", error);
             const message = error.response?.data?.message || error.response?.data?.error || (error.response?.data?.errors ? error.response.data.errors[0].msg : 'Registration failed');
             return { success: false, message };
         }
@@ -80,7 +77,7 @@ export const DriverProvider = ({ children }) => {
             localStorage.removeItem('driverToken');
             router.push('/login?role=driver');
         } catch (error) {
-            console.error("Logout failed", error);
+            // Ignore console.error
         }
     };
 
