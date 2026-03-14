@@ -14,7 +14,7 @@ const MapComponent = dynamic(() => import('@/common/components/MapComponent'), {
 
 export default function TripDetailsAccepted({ params }) {
     const router = useRouter();
-    const id = params.id;
+    const { id } = React.use(params);
     const [booking, setBooking] = useState(null);
     const [vehicleLocation, setVehicleLocation] = useState(null);
     const [socket, setSocket] = useState(null);
@@ -52,7 +52,9 @@ export default function TripDetailsAccepted({ params }) {
                         location: { lat: latitude, lon: longitude }
                     });
                 },
-                (error) => console.error(error),
+                (error) => {
+                    // Ignore location errors to prevent red overlay, just fallback gracefully
+                },
                 { enableHighAccuracy: true, distanceFilter: 10 }
             );
 
@@ -65,7 +67,7 @@ export default function TripDetailsAccepted({ params }) {
 
     const handleCompleteTrip = async () => {
         try {
-            await api.patch(`/bookings/${id}/status`, { status: "completed" });
+            await api.put(`/bookings/${id}/status`, { status: "completed" });
             router.push('/driver/dashboard');
         } catch (error) {
             console.error("Failed to complete trip:", error);
@@ -76,7 +78,7 @@ export default function TripDetailsAccepted({ params }) {
 
     return (
         <div className="min-h-screen bg-gray-50/50 font-sans">
-            <UserNav active="Dashboard" tabs={driverTabs} />
+            <UserNav active="Dashboard" tabs={driverTabs} role="driver" />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="p-8">

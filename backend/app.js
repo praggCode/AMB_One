@@ -13,12 +13,24 @@ const bookingRoutes = require("./routes/booking.route");
 const helmet = require("helmet");
 
 app.use(helmet());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://ambulance-booking-phi.vercel.app'],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    const allowed = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://ambulance-booking-phi.vercel.app'];
+    if (allowed.includes(origin) || origin.startsWith('http://10.') || origin.startsWith('http://192.168.')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 

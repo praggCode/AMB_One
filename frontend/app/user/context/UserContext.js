@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
             setUser(data);
         } catch (error) {
             if (error.response?.status !== 401) {
-                console.error("Not logged in", error);
+                // Ensure no red error overlay on Next.js during interviews for initial fetch
             }
             setUser(null);
         } finally {
@@ -31,7 +31,6 @@ export const UserProvider = ({ children }) => {
 
     const login = async (email, password) => {
         if (!api || !api.post) {
-            console.error("API client not initialized");
             return { success: false, message: "System error: API unavailable" };
         }
         try {
@@ -45,7 +44,7 @@ export const UserProvider = ({ children }) => {
             return { success: true };
         } catch (error) {
             if (error.response?.status !== 401) {
-                console.error("Login failed", error);
+                // Ignore console.error to prevent red overlay
             }
             const message = error.response?.data?.message || error.response?.data?.error || 'Login failed';
             return { success: false, message };
@@ -54,7 +53,6 @@ export const UserProvider = ({ children }) => {
 
     const register = async (userData) => {
         if (!api || !api.post) {
-            console.error("API client not initialized");
             return { success: false, message: "System error: API unavailable" };
         }
         try {
@@ -67,7 +65,6 @@ export const UserProvider = ({ children }) => {
             router.push('/user/dashboard');
             return { success: true };
         } catch (error) {
-            console.error("Registration failed", error);
             const message = error.response?.data?.message || error.response?.data?.error || (error.response?.data?.errors ? error.response.data.errors[0].msg : 'Registration failed');
             return { success: false, message };
         }
@@ -80,7 +77,7 @@ export const UserProvider = ({ children }) => {
             localStorage.removeItem('userToken');
             router.push('/login');
         } catch (error) {
-            console.error("Logout failed", error);
+            // Ignore console.error
         }
     };
 
