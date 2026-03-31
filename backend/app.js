@@ -26,7 +26,7 @@ app.use(cors({
     if (!origin) return callback(null, true);
     const allowed = process.env.FRONTEND_URL
       ? process.env.FRONTEND_URL.split(',')
-      : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://ambulance-booking-phi.vercel.app'];
+      : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://mediride-frontend-again.onrender.com/'];
     const isAllowed =
       allowed.includes(origin) ||
       origin.startsWith('http://10.') ||
