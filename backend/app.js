@@ -24,8 +24,16 @@ app.use((req, res, next) => {
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    const allowed = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://ambulance-booking-phi.vercel.app'];
-    if (allowed.includes(origin) || origin.startsWith('http://10.') || origin.startsWith('http://192.168.')) {
+    const allowed = process.env.FRONTEND_URL
+      ? process.env.FRONTEND_URL.split(',')
+      : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://ambulance-booking-phi.vercel.app'];
+    const isAllowed =
+      allowed.includes(origin) ||
+      origin.startsWith('http://10.') ||
+      origin.startsWith('http://192.168.') ||
+      origin.endsWith('.vercel.app') ||          // allow all Vercel preview URLs
+      origin.endsWith('.onrender.com');           // allow all Render preview URLs
+    if (isAllowed) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

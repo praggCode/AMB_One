@@ -26,7 +26,7 @@ module.exports.registerDriver = async (req, res) => {
         })
 
         const token = driverModel.generateAuthToken(driver)
-        res.cookie('token', token)
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None' })
         res.status(201).json({ token, driver })
     } catch (error) {
         console.error("Driver registration error:", error);
@@ -54,7 +54,7 @@ module.exports.loginDriver = async (req, res, next) => {
         }
 
         const token = driverModel.generateAuthToken(driver)
-        res.cookie('token', token)
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None' })
 
         res.status(200).json({ driver, token })
     } catch (err) {

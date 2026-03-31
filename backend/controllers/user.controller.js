@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const userService = require("../services/user.service");
 const { validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken"); 
+const jwt = require("jsonwebtoken");
 
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
@@ -25,7 +25,7 @@ module.exports.registerUser = async (req, res, next) => {
       phone,
     });
     const token = User.generateAuthToken(user);
-    res.cookie("token", token);
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'None' });
     res.status(201).json({ user, token });
   } catch (err) {
     console.error("Register error:", err.message, err.stack);
@@ -56,7 +56,7 @@ module.exports.loginUser = async (req, res, next) => {
     }
 
     const token = User.generateAuthToken(user);
-    res.cookie("token", token);
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'None' });
 
     res.status(200).json({ user, token });
   } catch (err) {
